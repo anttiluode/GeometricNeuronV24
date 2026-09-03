@@ -35,7 +35,29 @@ No. Gate 3B deliberately makes fine probes noisy. Raw predictive-variance select
 ### “A diagnostic write and a structural write are the same thing”
 
 No. Gate 3A changes only fast state and leaves the operator fixed. Gate 3B changes a local operator parameter; its signature survives erasure of the fast field and write log. Keeping these separate is now a standing obligation.
-\n## Earlier kills carried forward
+\n
+
+### “Full rank means the soma can read the hidden dendritic state”
+
+No. Gate 4 active stimulation opens the real-morphology passive Jacobian to
+12/12 numerical rank, yet at the locked 1-uV RMS soma-noise ruler only 7/12
+singular directions are visible and exact hidden-section identity is about
+0.78. Algebraic observability and reliable readout are different gates.
+
+### “Multiscale stimulation is necessary on the real tree”
+
+No. Active point-only probes already reach full rank and 0.761 identity versus
+0.779 for multiscale. Gate 4 earns address selection; cluster scale adds only a
+modest gain in this assay.
+
+### “The biological radius profile creates the observability gain”
+
+Not supported. Flattening every dendritic radius to the real-cell median keeps
+full rank and increases the smallest singular value in this passive model.
+Topology/address placement survive as sufficient ingredients for the measured
+rank opening.
+
+## Earlier kills carried forward
 
 - The original ECG graph remains V21's quantized aliasing map plus variance thermostat, not a lag/skew operator.
 - Phase-as-memory without unknown-address retrieval remains killed by V21's no-probe/wrong-probe null.
