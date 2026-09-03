@@ -1,0 +1,45 @@
+{
+  "gate": 5,
+  "summary_type": "ci_summary",
+  "source_run_id": 33726679384,
+  "classification": "HUMAN_NMDA_RESHAPES_BUT_DOES_NOT_RESCUE_SOMA_OBSERVABILITY",
+  "same_passive_selected_addresses_all_conditions": true,
+  "conditions": {
+    "PASSIVE_CURRENT": {
+      "numerical_rank": 12,
+      "noise_visible_rank": 7,
+      "smallest_singular_mV": 0.000063980,
+      "identity_accuracy_mean": 0.776
+    },
+    "AMPA_ONLY": {
+      "numerical_rank": 12,
+      "noise_visible_rank": 7,
+      "smallest_singular_mV": 0.000052641,
+      "identity_accuracy_mean": 0.713
+    },
+    "FROZEN_NMDA": {
+      "numerical_rank": 12,
+      "noise_visible_rank": 7,
+      "smallest_singular_mV": 0.000052641,
+      "identity_accuracy_mean": 0.713
+    },
+    "HUMAN_NMDA": {
+      "numerical_rank": 12,
+      "noise_visible_rank": 7,
+      "smallest_singular_mV": 0.000054218,
+      "identity_accuracy_mean": 0.724
+    }
+  },
+  "human_vs_frozen": {
+    "visible_rank_gain": 0,
+    "identity_gain": 0.011,
+    "median_passive_weak_direction_gain": 1.030,
+    "median_passive_strong_direction_gain": 1.036,
+    "weak_strong_selectivity": 0.994
+  },
+  "controls": {
+    "ampa_vs_frozen_max_abs_discrepancy_mV": 8.674e-19,
+    "human_10pct_hidden_leak_fd_relative_error": 0.0002
+  },
+  "note": "Gate 5 closes the tested static morphology-graph plus HUMAN NMDA bridge to a high-fidelity soma observer; it does not establish a universal claim about biological neurons."
+}
