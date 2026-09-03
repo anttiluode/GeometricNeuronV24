@@ -23,7 +23,9 @@ jobs:
         run: python experiments/gate0_lens_rank.py --no-plots
       - name: Gate 1 - structured-world address policy
         run: python experiments/gate1_structured_lens.py --no-plots
-      - name: Gate 2 - controlled hidden-law identification
-        run: python experiments/gate2_rule_sherlock.py --no-plots
       - name: Gate 2 robustness audit
         run: python experiments/gate2_robustness.py
+      - name: Gate 3 - READ + WRITE
+        run: python experiments/gate3_read_write.py
+      - name: Gate 3 robustness audit
+        run: python experiments/gate3_robustness.py
