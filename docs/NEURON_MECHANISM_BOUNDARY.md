@@ -139,3 +139,33 @@ central reconstruction of the complete dendritic state.
 
 That is still a model-level constraint, not evidence that a neuron actively
 runs this identification procedure.
+
+
+## Gate 5: the tested NMDA bridge does not rescue the soma channel
+
+The next bridge was run rather than argued.
+
+On the exact Gate-4 passive-selected addresses, rest-matched HUMAN NMDA changed
+the observability spectrum only weakly:
+
+```text
+frozen-block identity       0.713
+HUMAN identity              0.724
+visible rank                7/12 -> 7/12
+
+weak-direction gain         1.030x
+strong-direction gain       1.036x
+```
+
+So the voltage-dependent magnesium block does not preferentially amplify the
+hidden directions that passive transport suppresses at the soma.
+
+The defensible conclusion is narrower than “neurons must be decentralized.”
+This particular morphology + static cable + HUMAN NMDA bridge does not support
+the soma-as-detailed-central-observer picture.
+
+That makes a decentralized interpretation more attractive: local branch state
+and local plasticity can do computation while somatic output serves as a
+strongly compressed consequence/coordination signal. But biological neurons
+have many mechanisms absent here, so Gate 5 is a stopping line for this bridge,
+not a proof about all neurons.
