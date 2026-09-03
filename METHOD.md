@@ -206,3 +206,32 @@ Gate 6B was introduced only afterward. It numerically integrates expected
 Bayesian information gain for each candidate noisy lens and chooses the lens
 with maximal mutual information about prototype identity. Gate 6B is a
 post-result policy audit, not a replacement preregistration.
+
+
+## Gate 6C - post-result same-field write-timescale audit
+
+Gate 6C is not a new preregistered gate. It isolates the temporal objection to
+Gate 6's persistent write.
+
+The anomaly remains present for eight steps. Paid lenses use the same 16, 8 and
+4 geometry and noise levels as Gate 6. Probe choice uses the high-SNR discrete
+partition form of Gate 6B information gain.
+
+After every paid residual pulse `y = h^T(world - x)`, the local writer updates
+the same addressed field before the next probe:
+
+```text
+x <- x + alpha y h / ||h||^2
+alpha = 1 - exp(-1/tau_write)
+```
+
+The sweep is `tau/probe = 0, .25, .5, 1, 2, 4, 8, 16, inf`, over ten noise
+seeds and all eight anomaly identities.
+
+The attacker `HISTORY_REPLAY` stores absolute pulse equations and repeatedly
+solves the minimum-norm field consistent with that history before applying the
+same alpha. It is intentionally a conventional state-estimation/bookkeeping
+control rather than a same-field mechanism.
+
+Reported metrics are paid probes per eight-step event, repeated paid steps,
+negative HOME triggers, final field error, and localization accuracy.
