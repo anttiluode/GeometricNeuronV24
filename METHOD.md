@@ -76,6 +76,53 @@ Original locked requirements:
 
 The default seed passed. A post-result seeds 1 through 10 audit retained the same thresholds. Active exact identification remained 1.000 on all ten seeds, but the 0.20 active-minus-random condition held on only five. This is reported as `MECHANISM_REPLICATES_LOCKED_MARGIN_DOES_NOT`.
 
+## Gate 3 - READ + WRITE
+
+Gate 3 separates **state excitation** from **operator modification**.
+
+### Gate 3A - state write reveals hidden transport
+
+The hidden operator is one of four periodic shift-plus-diffusion laws. From the zero state all four are exactly indistinguishable. Two writes have identical L2 energy:
+
+- a uniform field, which every transport law preserves;
+- one localized impulse.
+
+Reads use the same addressed box-average family at scales 4, 8, and 16. A Bayesian active policy chooses the address with maximum posterior predictive separation. Random addressed reads are the attacker.
+
+Locked requirements:
+
+1. read-only law spread below `1e-13`;
+2. uniform-write law spread below `1e-13`;
+3. localized-write law spread above `0.25`;
+4. active exact identification at least `0.99`;
+5. active exceeds random by at least `0.35`.
+
+The write changes `x`, not the transport law. This earns diagnostic excitation only.
+
+### Gate 3B - persistent operator write survives reset
+
+One of four 4 x 4 regions receives a persistent change in the local retention coefficient. The original fast state is erased and the observer is not told the write address. Every hypothesis is then loaded with the same public uniform diagnostic field.
+
+Reads use scales 2, 4, 8, and 16. Detector noise is deliberately heteroscedastic and known: fine lenses are much noisier. Three policies are compared:
+
+- random address;
+- raw posterior predictive variance;
+- noise-aware predictive separation, variance divided by detector-noise variance.
+
+Locked requirements:
+
+1. no-operator-write law spread below `1e-13`;
+2. persistent-write law spread above `0.005`;
+3. noise-aware exact identification at least `0.99`;
+4. noise-aware exceeds random by at least `0.45`;
+5. raw predictive variance does not exceed `0.75` exact accuracy.
+
+The raw-variance attacker matters: an active policy that ignores measurement quality can be worse than random.
+
+### Gate 3 robustness
+
+Seeds 1 through 10 rerun both halves with all original thresholds unchanged. Passing requires Gate 3A and Gate 3B to pass on every seed.
+
 ## Measurement normalization
 
 Physical lens outputs are area averages. Rank is invariant to nonzero row scaling. For Gate 0's noise/conditioning comparison only, every design row is normalized to unit Euclidean energy; this gives box masks a generous equal-signal-variance comparison against global masks. The JSON receipt marks this explicitly.
