@@ -209,7 +209,7 @@
 
     .receipt-strip {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       gap: 10px;
       margin-top: 12px;
     }
@@ -282,10 +282,10 @@
         <div class="aperture" aria-hidden="true"></div>
         <div>
           <h1>Geometric Neuron V24</h1>
-          <p class="kicker">The addressable lens / Gate 0 instrument</p>
+          <p class="kicker">The addressable lens / Gates 0–3 instrument</p>
         </div>
       </div>
-      <p class="header-note">A hidden 32 x 32 field. One scalar detector. You choose where to look and at what scale. The address is part of the evidence.</p>
+      <p class="header-note">A hidden 32 x 32 field. One scalar detector. You choose where to look and at what scale. The address is part of the evidence.<br><a href="./gate3.html">Open Gate 3: READ + WRITE →</a></p>
     </header>
 
     <section class="bench" aria-label="Addressed observation workbench">
@@ -404,6 +404,7 @@
       <div class="receipt"><span class="eyebrow">Gate 0 / random null</span><strong>0.0025 spread</strong><p>At matched rank 192, raster, random-global, and addressed-box rows recover the same random-image energy.</p></div>
       <div class="receipt"><span class="eyebrow">Gate 1 / structured</span><strong>-28.1% MSE</strong><p>At 64 pulses, covariance-guided local addresses beat fixed fine pixels. The non-local PCA oracle still wins.</p></div>
       <div class="receipt"><span class="eyebrow">Gate 2 / rule</span><strong>64 / 64</strong><p>Active addresses identify the controlled hidden law; 10-seed replication keeps 100%, while the locked margin passes 5/10.</p></div>
+      <div class="receipt"><span class="eyebrow">Gate 3 / READ+WRITE</span><strong>10 / 10 + 10 / 10</strong><p>A localized state write reveals hidden transport; a persistent operator write survives fast-state erasure. <a href="./gate3.html">Try it.</a></p></div>
     </section>
 
     <section class="lower">
@@ -412,7 +413,7 @@
         <p>The old Perception Lab loop showed that sampling grid and tap location can change a feedback regime. V24 removes the thermostat first and asks the prior question cleanly: what can one scalar detector know when its readout can move?</p>
         <div class="equation">address a = (scale, row, column)<br>pulse y = h<sub>a</sub><sup>T</sup>x<br>evidence Y = Hx</div>
         <p>Resolution is the lens. Row and column are the address. The pulse has meaning only together with both. The transpose <span class="mono">H<sup>T</sup></span> paints a pulse error back into image space; here it is a software adjoint, not a claim that a physical device has performed backpropagation.</p>
-        <p>The next object is deliberately absent: <span class="mono">x(t+1) = G<sub>theta</sub>(x(t), write(t))</span>. V24 will add a changing field only after this static observation channel is understood.</p>
+        <p>Gate 3 now adds a separate write: <span class="mono">x(t+1) = G<sub>theta</sub>(x(t), w(t))</span>. A state write excites an unchanged operator; a persistent operator write changes what later signals encounter. <a href="./gate3.html">Open the READ+WRITE instrument.</a></p>
       </article>
 
       <article class="panel explain">
@@ -423,13 +424,14 @@
           <div class="ledger-item"><span class="tag">[V]</span><p>Non-nested grids can add rank. “Moiré buys rank” remains only shorthand for this exact partition result.</p></div>
           <div class="ledger-item"><span class="tag kill">[K]</span><p>A changing lens does not beat information theory on arbitrary random images. Equal rank means equal expected captured energy.</p></div>
           <div class="ledger-item"><span class="tag kill">[K]</span><p>The old ECG loop is not promoted into a memory, adjoint, or neuron. V21’s variance-thermostat diagnosis remains standing.</p></div>
-          <div class="ledger-item"><span class="tag open">[OPEN]</span><p>Can pulse history plus chosen writes identify a hidden growth law, then make future geometry more useful?</p></div>
+          <div class="ledger-item"><span class="tag">[V]</span><p>Gate 3 separates diagnostic state writes from persistent operator writes; both halves pass 10/10 robustness seeds.</p></div>
+          <div class="ledger-item"><span class="tag open">[OPEN]</span><p>On the compiled human neuron 1125, how much hidden dendritic state becomes observable when stimulation address and integration scale can move?</p></div>
         </div>
       </article>
     </section>
 
     <footer>
-      <a href="https://github.com/anttiluode/GeometricNeuronV24">source, experiments, and full receipts</a> - no neuron or biological-identification claim
+      <a href="./gate3.html">READ+WRITE instrument</a> · <a href="https://github.com/anttiluode/GeometricNeuronV24">source, experiments, and full receipts</a> - no neuron or biological-identification claim
     </footer>
   </main>
 
