@@ -324,6 +324,46 @@ See [the full Gate 6 note](docs/GATE6_PERCEPTIONLAB_MEMORY.md),
 [the persistent-memory experiment](experiments/gate6_perceptionlab_memory.py),
 and [the post-result information policy](experiments/gate6b_information_policy.py).
 
+
+### Gate 6C - the write has a clock
+
+A post-result audit now moves WRITE **between** paid pulses instead of waiting
+until the onset search is over. Each residual pulse is backprojected into the
+same addressed spatial field with a first-order write rate
+`alpha = 1 - exp(-1/tau_write)`.
+
+Across 10 noise seeds x 8 anomaly identities:
+
+```text
+tau_write / probe interval      local same-field      history replay
+0 (instant)                           9.750                 5.625
+0.5                                   9.638                 5.700
+1                                     8.425                 6.075
+2                                    10.175                 7.613
+8                                    18.900                14.888
+inf (no write)                        24.000                24.000
+```
+
+The local field has a genuine intermediate minimum at `tau/probe = 1`:
+instant WRITE costs 1.157x the minimum and no WRITE costs 2.849x.
+
+But the original "broken copy" worry does **not** appear as lost identity
+evidence here. Localization remains 1.000 at every tested timescale. Fast local
+WRITE instead over-corrects overlapping 16 -> 8 -> 4 averages and drives the
+free HOME residual negative, causing unnecessary verification pulses.
+
+A deliberately boring `HISTORY_REPLAY` attacker stores all pulse equations and
+recomputes a consistent minimum-norm field. It removes the fast-write penalty
+and prefers instantaneous update. So the timescale optimum is not universal;
+it is the price paid by the **same-field, no-extra-bookkeeping** write rule.
+
+Classification:
+
+> **`INTERMEDIATE_LOCAL_WRITE_TIMESCALE_MINIMIZES_PROBES_BUT_HISTORY_ATTACKER_REMOVES_FAST_WRITE_PENALTY`**
+
+See [the Gate 6C note](docs/GATE6C_WRITE_TIMESCALE.md) and
+[experiment](experiments/gate6c_write_timescale.py).
+
 ## The adjoint: what V24 uses, and what it does not claim
 
 For a static linear measurement stack `y = Hx`, the squared-error gradient is simply
