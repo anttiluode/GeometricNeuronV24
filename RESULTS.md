@@ -191,3 +191,47 @@ Controls:
 The locked rescue requirements were not met. HUMAN magnesium feedback reshapes
 the sensitivity matrix slightly but does not selectively lift the five weak
 Gate-4 directions or add a noise-visible dimension.
+
+
+## Gate 6 - `PERSISTENT_WRITE_CHANGES_FUTURE_SENSING_BUT_MULTISCALE_NOT_EARNED`
+
+Across 20 seeds:
+
+| policy | paid probes | pre-prediction MSE | onset probes | repeated paid looks |
+|---|---:|---:|---:|---:|
+| ACTIVE_WRITE_MULTISCALE | 42.00 | 0.001563 | 4.375 | 0.00 |
+| ACTIVE_NOWRITE_MULTISCALE | 280.00 | 0.006667 | 4.375 | 56.00 |
+| ACTIVE_WRITE_FINE | 42.00 | 0.001563 | 4.375 | 0.00 |
+| RANDOM_WRITE_MULTISCALE | 56.60 | 0.001729 | 5.08 | 1.60 |
+
+Active-write localization accuracy was 1.000.
+
+Write versus no-write:
+
+| comparison | ratio |
+|---|---:|
+| pre-prediction MSE | 0.234 |
+| paid probes | 0.150 |
+| repeated paid looks | 0.000 |
+
+The original multiscale requirement failed because raw predictive variance used
+the same onset-search cost as fine-only: ratio 1.000.
+
+## Gate 6B post-result audit - `INFORMATION_GAIN_UNLOCKS_COARSE_TO_FINE_SEARCH_POSTHOC`
+
+Expected Bayesian information gain replaced raw predictive variance only after
+the Gate-6 scale failure.
+
+| selector | onset probes |
+|---|---:|
+| raw predictive variance, multiscale | 4.375 |
+| fine-only | 4.375 |
+| expected information gain, multiscale | 3.000 |
+
+Information/fine cost ratio: **0.686**. Localization remained **1.000**.
+
+The information selector used scale sequence **16 -> 8 -> 4 on all 160/160
+audited onset searches**.
+
+This does not retroactively pass the Gate-6 preregistration; it is a new
+post-result mechanism.
