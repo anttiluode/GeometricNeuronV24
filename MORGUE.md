@@ -73,3 +73,18 @@ rank opening.
 - Any of this illuminates a biological neuron beyond analogy.
 
 Each bet requires a new experiment. None is promoted by the current three gates.
+
+
+### “HUMAN NMDA turns the soma into a detailed branch-state observer”
+
+Killed by Gate 5 in the current reduced bridge.
+
+Using the same 12 passive-selected addresses, HUMAN NMDA leaves the
+noise-visible rank at 7/12 and improves exact identity only from 0.713 to 0.724
+relative to the rest-matched frozen-block control. The five weak passive
+directions gain 1.030x while strong directions gain 1.036x, so there is no
+selective rescue.
+
+This does not kill dendritic NMDA computation. It kills the narrower attempted
+use of that nonlinearity as a central soma-observability rescue in this assay.
+
