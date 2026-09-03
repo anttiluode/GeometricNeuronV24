@@ -37,3 +37,5 @@ jobs:
         run: python experiments/gate5_nmda_observability.py
       - name: Gate 6 - PerceptionLab persistent memory
         run: python experiments/gate6_perceptionlab_memory.py
+      - name: Gate 6B - information-gain multiscale audit
+        run: python experiments/gate6b_information_policy.py
