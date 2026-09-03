@@ -28,7 +28,7 @@ The page lets you hide a 32 x 32 field, move a box-average lens, choose an addre
 
 If GitHub Pages has not yet been enabled, open [`docs/index.html`](docs/index.html) locally.
 
-## What survived the first four gates
+## What survived the first five gates
 
 | gate | question | result | boundary |
 |---|---|---|---|
@@ -36,6 +36,7 @@ If GitHub Pages has not yet been enabled, open [`docs/index.html`](docs/index.ht
 | **1** | Does choosing scale/address help when worlds have repeatable structure? | **Pass.** At 64 pulses, a covariance-guided local lens reduced held-out error by 19.1% versus random addresses and 28.1% versus fixed fine pixels. | A non-local PCA oracle remained much better. |
 | **2** | Can pulse + chosen address history identify a hidden dynamical law? | **Controlled pass.** An active observer identified all 64 laws in 192/192 trials after 12 noisy pulses. | The law family and initial field were known; fixed-scale active sensing also reached 100%. |
 | **2R** | Does Gate 2 survive new seeds? | The 100% active result repeated on 10/10 seeds. | The original >=0.20 advantage over random passed only 5/10 seeds. Threshold retained, not lowered. |\n| **3A** | Can a write reveal dynamics that read-only observation cannot see? | **Pass.** Four transport laws are exactly identical from zero and after an equal-energy uniform write; a localized write makes them distinguishable. Active addressed reads reached 1.000 exact accuracy versus 0.355 random on the default receipt. | This is a **state write**: it excites the hidden operator but does not alter it. |\n| **3B** | Can a write alter the hidden operator and remain observable after fast-state erasure? | **Pass.** A local retention change remains identifiable after the fast field and write identity are erased. Noise-aware active reads reached 1.000; raw predictive variance 0.367 and random 0.480. | This is a controlled persistent parameter write, not autonomous growth. |\n| **3R** | Does READ+WRITE survive new seeds? | **Pass.** Gate 3A and 3B each passed 10/10 additional seeds. | Finite law families and known diagnostic protocol remain strong constraints. |
+| **4** | On real human cell 1125, does moving dendritic stimulation address make hidden local cable parameters more observable at the soma? | **Mixed / informative.** Active addressed probes open the 12-parameter Jacobian from fixed-address rank 2 to full rank 12; random 12-probe sets have median rank 9. | The locked >=90% identity target at 1 uV soma noise **failed 0/10**; active identity is ~0.778 and only 7/12 singular directions clear the 1-uV ruler. |
 
 ### Gate 0 - the random image is the null
 
@@ -163,6 +164,48 @@ The deliberately heteroscedastic detector is a useful attacker. Simply probing w
 
 Across seeds 1 through 10, **both Gate 3A and Gate 3B passed 10/10**. See [the Gate 3 experiment](experiments/gate3_read_write.py), [robustness audit](experiments/gate3_robustness.py), and [the neuron-mechanism boundary](docs/NEURON_MECHANISM_BOUNDARY.md).
 
+## Gate 4 - the telescope reaches a real dendritic tree
+
+Gate 4 loads the pinned released human L2/3 **cell 1125** morphology (12,632
+point-tree nodes) and builds a passive morphology-graph cable. Twelve real
+dendritic sections carry possible hidden 10% leak-density changes. The observer
+gets only somatic voltage and may choose 12 stimulation probes from 144
+address/cluster-scale candidates.
+
+The strict result is not a clean pass:
+
+```text
+fixed address + varying scale     rank  2 / 12    identity 0.372
+active point-only                 rank 12 / 12    identity 0.761
+active multiscale                 rank 12 / 12    identity 0.779
+random multiscale                 rank  9 / 12 median
+```
+
+The active Jacobian is algebraically full-rank, but at the locked **1 uV RMS**
+soma-noise ruler only **7/12** singular directions are noise-visible. The
+original `>=0.90` identity target passed **0/10** post-result noise seeds.
+
+A post-result noise sweep puts the same classifier at 1.000 accuracy at
+0.10 uV, 0.977 at 0.25 uV, 0.905 at 0.50 uV, 0.777 at 1 uV, and 0.543 at
+2 uV.
+
+Classification:
+
+> **`ADDRESS_OPENS_FULL_RANK_BUT_SOMA_NOISE_LIMITS_IDENTITY`**
+
+That is arguably the more useful neuronal result. Addressed perturbation removes
+an **algebraic** ambiguity, but soma-only readout remains an **amplitude**
+bottleneck.
+
+Point probes already reach full rank, so multiscale stimulation is not necessary
+here. Flattening all dendritic radii to the real-cell median also preserves full
+rank and actually improves the worst singular value, so the biological radius
+profile is not what earns this effect in the current passive model.
+
+See [Gate 4's full boundary](docs/GATE4_NEURON_OBSERVABILITY.md),
+[the experiment](experiments/gate4_cell1125_observability.py), and
+[the post-result audit](experiments/gate4_robustness.py).
+
 ## The adjoint: what V24 uses, and what it does not claim
 
 For a static linear measurement stack `y = Hx`, the squared-error gradient is simply
@@ -208,22 +251,25 @@ Every experiment writes a machine-readable JSON receipt under `results/` and exi
 
 ## The next gate
 
-The image-field question has now reached the point where another synthetic transport law would add less than a biological translation.
+Gate 4 changes the question.
 
-The next clean experiment is **Neuron 1125 observability**: place hidden local parameter changes on the already compiled human L2/3 morphology, allow stimulation address and cluster scale to move, keep the readout at the soma, and measure the singular spectrum of
+Address selection already opens the passive soma-observability matrix to full
+rank. What remains weak is the amplitude of several directions at the soma.
 
-```text
-J_(probe, hidden parameter) = d somatic response / d hidden dendritic parameter.
-```
+Operaattori has already established a local HUMAN AMPA/NMDA feedback law on
+cell 1125. The next experiment should therefore ask whether that nonlinear
+closure **amplifies, rotates, or selectively rescues the weak Gate-4 singular
+directions**.
 
-Compare fixed stimulation, active addressed stimulation, passive cable, NMDA-enabled dynamics, and geometry/parameter shuffles. This would test a neuronal mechanism question: how much hidden dendritic state is somatically observable, and how much becomes observable only when the tree is actively interrogated?
-
-Only after that should V24 close a developmental loop in which evidence chooses persistent writes that improve future computation.
+The required attackers are AMPA-only, frozen magnesium block, and the same
+passive current probes. Keep addresses and hidden leak perturbations fixed.
+If HUMAN NMDA does not improve the weak directions, stop trying to turn a
+soma-only scalar into a complete dendritic monitor.
 
 See [`METHOD.md`](METHOD.md), [`RESULTS.md`](RESULTS.md), and [`MORGUE.md`](MORGUE.md).
 
 ---
 
-**Current boundary:** V24 has earned an addressable scalar observation family, a structured-world address policy, controlled active identification of a finite hidden-law family, an intervention that reveals otherwise hidden transport, and a persistent local operator write that survives fast-state erasure. It has not earned arbitrary-image reconstruction, unknown-law discovery, autonomous growth, a physical adjoint, or a biological-neuron mechanism.
+**Current boundary:** V24 has earned an addressable scalar observation family, controlled READ+WRITE interventions, and on a pinned real human morphology an addressed stimulation family that opens a 12-parameter passive soma-observability Jacobian to full rank. It has **not** earned reliable full identity through a 1-uV soma-noise channel, a released-model nonlinear result, autonomous biological self-probing, a physical adjoint, or a complete neuron mechanism.
 
 *Do not hype. Do not lie. Just show.*
