@@ -39,3 +39,5 @@ jobs:
         run: python experiments/gate6_perceptionlab_memory.py
       - name: Gate 6B - information-gain multiscale audit
         run: python experiments/gate6b_information_policy.py
+      - name: Gate 6C - write timescale
+        run: python experiments/gate6c_write_timescale.py
