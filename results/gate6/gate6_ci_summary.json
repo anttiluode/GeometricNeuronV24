@@ -1,0 +1,43 @@
+{
+  "gate": 6,
+  "summary_type": "ci_summary",
+  "source_run_id": 33727647936,
+  "classification": "PERSISTENT_WRITE_CHANGES_FUTURE_SENSING_BUT_MULTISCALE_NOT_EARNED",
+  "original_gate_passed": false,
+  "memory_mechanism_observed": true,
+  "audit_seeds": 20,
+  "policies": {
+    "ACTIVE_WRITE_MULTISCALE": {
+      "paid_probes_mean": 42.0,
+      "pre_prediction_mse_mean": 0.001563,
+      "onset_search_probes_mean": 4.375,
+      "repeated_on_paid_steps_mean": 0.0,
+      "localization_accuracy": 1.0
+    },
+    "ACTIVE_NOWRITE_MULTISCALE": {
+      "paid_probes_mean": 280.0,
+      "pre_prediction_mse_mean": 0.006667,
+      "onset_search_probes_mean": 4.375,
+      "repeated_on_paid_steps_mean": 56.0
+    },
+    "ACTIVE_WRITE_FINE": {
+      "paid_probes_mean": 42.0,
+      "pre_prediction_mse_mean": 0.001563,
+      "onset_search_probes_mean": 4.375,
+      "repeated_on_paid_steps_mean": 0.0
+    },
+    "RANDOM_WRITE_MULTISCALE": {
+      "paid_probes_mean": 56.6,
+      "pre_prediction_mse_mean": 0.001729,
+      "onset_search_probes_mean": 5.08,
+      "repeated_on_paid_steps_mean": 1.6
+    }
+  },
+  "comparisons": {
+    "write_vs_nowrite_pre_mse_ratio": 0.234,
+    "write_vs_nowrite_paid_probe_ratio": 0.150,
+    "write_vs_nowrite_repeated_paid_ratio": 0.0,
+    "raw_multiscale_vs_fine_onset_cost_ratio": 1.0
+  },
+  "note": "The persistent-write mechanism passed strongly. The original multiscale requirement failed and remains failed."
+}
