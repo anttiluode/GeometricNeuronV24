@@ -61,3 +61,44 @@ Active multiscale address counts were concentrated at scales 2 and 16. Since act
 | active minus random | 0.204 | 0.172 | 0.240 |
 
 The original complete gate passed 5/10 seeds because it demanded an active-minus-random margin of at least 0.20 on each run. The threshold remains unchanged.
+
+
+## Gate 3 - `READ_WRITE_SEPARATES_STATE_EXCITATION_FROM_PERSISTENT_OPERATOR_CHANGE`
+
+Default-seed Gate 3A:
+
+| measurement | result |
+|---|---:|
+| read-only max law spread | 0 |
+| equal-energy uniform-write spread | 0 |
+| localized-write max law spread | 0.680000 |
+| active exact identification | 1.000 |
+| random addressed identification | 0.355 |
+
+Default-seed Gate 3B, after fast-state erasure and removal of the write identity:
+
+| measurement | result |
+|---|---:|
+| no-operator-write max law spread | 0 |
+| persistent operator-write spread | 0.075605 |
+| noise-aware active accuracy | 1.000 |
+| raw predictive-variance accuracy | 0.367 |
+| random accuracy | 0.480 |
+
+The two writes answer different questions. Gate 3A perturbs state so the unchanged operator becomes visible. Gate 3B changes a local operator parameter, then demonstrates that the change remains in later responses after the transient is removed.
+
+## Gate 3 robustness - `READ_WRITE_MECHANISM_REPLICATES_10_OF_10`
+
+| seeds 1..10 | result |
+|---|---:|
+| Gate 3A pass count | 10 / 10 |
+| active accuracy mean / minimum | 1.000 / 1.000 |
+| random accuracy mean | 0.380 |
+| minimum active-minus-random margin | 0.586 |
+| Gate 3B pass count | 10 / 10 |
+| noise-aware accuracy mean / minimum | 1.000 / 1.000 |
+| raw-variance accuracy mean | 0.411 |
+| random accuracy mean | 0.432 |
+| minimum noise-aware-minus-random margin | 0.516 |
+
+These are finite controlled hidden-law families. The result is an observability mechanism, not unknown-PDE discovery or a neuronal-learning result.
