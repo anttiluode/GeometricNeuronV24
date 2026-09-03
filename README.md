@@ -28,14 +28,14 @@ The page lets you hide a 32 x 32 field, move a box-average lens, choose an addre
 
 If GitHub Pages has not yet been enabled, open [`docs/index.html`](docs/index.html) locally.
 
-## What survived the first three gates
+## What survived the first four gates
 
 | gate | question | result | boundary |
 |---|---|---|---|
 | **0** | What independent directions can the lens observe? | **Pass.** Nested dyadic grids add redundancy but no rank beyond their finest grid. Non-nested grids add real measurement directions. | A random image still obeys rank. No compression miracle. |
 | **1** | Does choosing scale/address help when worlds have repeatable structure? | **Pass.** At 64 pulses, a covariance-guided local lens reduced held-out error by 19.1% versus random addresses and 28.1% versus fixed fine pixels. | A non-local PCA oracle remained much better. |
 | **2** | Can pulse + chosen address history identify a hidden dynamical law? | **Controlled pass.** An active observer identified all 64 laws in 192/192 trials after 12 noisy pulses. | The law family and initial field were known; fixed-scale active sensing also reached 100%. |
-| **2R** | Does Gate 2 survive new seeds? | The 100% active result repeated on 10/10 seeds. | The original >=0.20 advantage over random passed only 5/10 seeds. Threshold retained, not lowered. |
+| **2R** | Does Gate 2 survive new seeds? | The 100% active result repeated on 10/10 seeds. | The original >=0.20 advantage over random passed only 5/10 seeds. Threshold retained, not lowered. |\n| **3A** | Can a write reveal dynamics that read-only observation cannot see? | **Pass.** Four transport laws are exactly identical from zero and after an equal-energy uniform write; a localized write makes them distinguishable. Active addressed reads reached 1.000 exact accuracy versus 0.355 random on the default receipt. | This is a **state write**: it excites the hidden operator but does not alter it. |\n| **3B** | Can a write alter the hidden operator and remain observable after fast-state erasure? | **Pass.** A local retention change remains identifiable after the fast field and write identity are erased. Noise-aware active reads reached 1.000; raw predictive variance 0.367 and random 0.480. | This is a controlled persistent parameter write, not autonomous growth. |\n| **3R** | Does READ+WRITE survive new seeds? | **Pass.** Gate 3A and 3B each passed 10/10 additional seeds. | Finite law families and known diagnostic protocol remain strong constraints. |
 
 ### Gate 0 - the random image is the null
 
@@ -131,6 +131,38 @@ original locked gate        5 / 10 seeds
 
 The mechanism replicated. The originally demanded 0.20 margin did not.
 
+## Gate 3 - READ+WRITE: excitation is not modification
+
+Gate 3 finally separates two meanings that the older Geometric Neuron loops mixed together.
+
+**Gate 3A writes the fast state, not the operator.** Four hidden periodic transport laws (north, east, south, west with shared diffusion) all produce exactly the same readout from the zero field. An equal-L2-energy uniform write is still an exact null because every law preserves the uniform field. A localized unit-energy write breaks the symmetry:
+
+```text
+read-only max law spread          0
+uniform-write max law spread      0
+localized-write max law spread    0.680000
+active exact identification       1.000
+random addressed identification   0.355
+```
+
+So the important sentence is not "writing helps." It is:
+
+> **an addressed perturbation can excite a hidden operator in a way that makes previously unobservable dynamics observable.**
+
+**Gate 3B writes the operator itself.** One of four hidden local regions receives a persistent retention change. The fast field is then erased and the write address is withheld. Every hypothesis receives the same public diagnostic load. Later scalar probes can still recover which operator region changed:
+
+```text
+no-write max law spread           0
+persistent-write max spread       0.075605
+noise-aware active accuracy       1.000
+raw-variance accuracy             0.367
+random accuracy                   0.480
+```
+
+The deliberately heteroscedastic detector is a useful attacker. Simply probing where hypotheses have the largest raw spread chases noisy fine-scale channels and performs no better than random. Dividing expected separation by known detector noise recovers the hidden write.
+
+Across seeds 1 through 10, **both Gate 3A and Gate 3B passed 10/10**. See [the Gate 3 experiment](experiments/gate3_read_write.py), [robustness audit](experiments/gate3_robustness.py), and [the neuron-mechanism boundary](docs/NEURON_MECHANISM_BOUNDARY.md).
+
 ## The adjoint: what V24 uses, and what it does not claim
 
 For a static linear measurement stack `y = Hx`, the squared-error gradient is simply
@@ -176,23 +208,22 @@ Every experiment writes a machine-readable JSON receipt under `results/` and exi
 
 ## The next gate
 
-The next experiment should finally introduce a separate write action:
+The image-field question has now reached the point where another synthetic transport law would add less than a biological translation.
+
+The next clean experiment is **Neuron 1125 observability**: place hidden local parameter changes on the already compiled human L2/3 morphology, allow stimulation address and cluster scale to move, keep the readout at the soma, and measure the singular spectrum of
 
 ```text
-x_(t+1) = G_theta(x_t, w_t)
-y_t     = h_(a_t)^T x_t
+J_(probe, hidden parameter) = d somatic response / d hidden dendritic parameter.
 ```
 
-Use two hidden transport laws that are indistinguishable on an unexcited uniform field. Then compare read-only observation with a localized write followed by addressed reads. The prediction is not "writing always helps". It is sharper:
+Compare fixed stimulation, active addressed stimulation, passive cable, NMDA-enabled dynamics, and geometry/parameter shuffles. This would test a neuronal mechanism question: how much hidden dendritic state is somatically observable, and how much becomes observable only when the tree is actively interrogated?
 
-> **an intervention can make otherwise unobservable dynamics observable, and the address history should reveal exactly which ambiguity it removed.**
-
-Only after that should `w_t` become persistent growth and alter the geometry through which later pulses travel.
+Only after that should V24 close a developmental loop in which evidence chooses persistent writes that improve future computation.
 
 See [`METHOD.md`](METHOD.md), [`RESULTS.md`](RESULTS.md), and [`MORGUE.md`](MORGUE.md).
 
 ---
 
-**Current boundary:** V24 has earned an addressable scalar observation family, a structured-world address policy, and controlled active identification of a finite hidden-law family. It has not earned arbitrary-image reconstruction, unknown-law discovery, autonomous growth, a physical adjoint, or a biological-neuron claim.
+**Current boundary:** V24 has earned an addressable scalar observation family, a structured-world address policy, controlled active identification of a finite hidden-law family, an intervention that reveals otherwise hidden transport, and a persistent local operator write that survives fast-state erasure. It has not earned arbitrary-image reconstruction, unknown-law discovery, autonomous growth, a physical adjoint, or a biological-neuron mechanism.
 
 *Do not hype. Do not lie. Just show.*
