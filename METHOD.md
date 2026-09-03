@@ -123,6 +123,49 @@ The raw-variance attacker matters: an active policy that ignores measurement qua
 
 Seeds 1 through 10 rerun both halves with all original thresholds unchanged. Passing requires Gate 3A and Gate 3B to pass on every seed.
 
+## Gate 4 - real cell-1125 soma observability
+
+The source morphology is pinned to `ido4848/FCI` commit
+`75ad8b4d81a7f51bf888b30650c543592340db06`, file
+`2013_03_06_cell11_1125_H41_06.asc`.
+
+MorphIO supplies the point tree. Gate 4 builds a passive DC morphology-graph
+cable directly from edge length, radius and topology with `Ra=150 ohm cm` and
+`Rm=20,000 ohm cm^2`. This is not the released FCI NEURON model.
+
+Twelve deterministic dendritic sections are hidden-parameter locations. Hidden
+parameter `p_j=1` means a 10% local leak-density increase on section `j`.
+
+A probe injects 0.10 nA total current at one of 48 dendritic centers, using
+geodesic cluster radius 0, 35 or 110 um. Thus there are 144 candidate probes.
+Only soma voltage is read.
+
+For passive matrix `A`, probe `b_i`, soma selector `e_s`, and leak
+perturbation `D_j`:
+
+```text
+x_i = A^-1 b_i
+J_ij = -e_s^T A^-1 D_j A^-1 b_i
+```
+
+The 12-probe active policy greedily maximizes regularized Fisher log-determinant.
+Comparators are one fixed address with varying scales, active point-only probes,
+and random point/multiscale subsets.
+
+Original locked requirements included:
+
+1. >1000 real morphology nodes;
+2. active multiscale reaches numerical rank 12/12;
+3. active smallest singular value exceeds random-multiscale median by >=20%;
+4. exact hidden-section fingerprint accuracy >=0.90 at 0.001 mV RMS soma noise;
+5. fixed-address rank <=3;
+6. the analytic 10% sensitivity matches a direct finite difference within 8%.
+
+Requirement 4 failed. It remains locked.
+
+The post-result audit then varied only observation-noise seeds and noise
+amplitude. It is explicitly not a replacement gate.
+
 ## Measurement normalization
 
 Physical lens outputs are area averages. Rank is invariant to nonzero row scaling. For Gate 0's noise/conditioning comparison only, every design row is normalized to unit Euclidean energy; this gives box masks a generous equal-signal-variance comparison against global masks. The JSON receipt marks this explicitly.
