@@ -235,3 +235,35 @@ audited onset searches**.
 
 This does not retroactively pass the Gate-6 preregistration; it is a new
 post-result mechanism.
+
+
+## Gate 6C post-result audit - `INTERMEDIATE_LOCAL_WRITE_TIMESCALE_MINIMIZES_PROBES_BUT_HISTORY_ATTACKER_REMOVES_FAST_WRITE_PENALTY`
+
+WRITE now occurs between pulses in the same addressed field:
+
+```text
+x <- x + alpha * residual * h / ||h||^2
+alpha = 1 - exp(-1/tau_write)
+```
+
+Across 80 trials per timescale:
+
+| tau / probe | local same-field probes | history-replay probes |
+|---:|---:|---:|
+| 0 | 9.750 | 5.625 |
+| 0.25 | 9.750 | 5.625 |
+| 0.5 | 9.638 | 5.700 |
+| **1** | **8.425** | 6.075 |
+| 2 | 10.175 | 7.613 |
+| 4 | 14.100 | 10.200 |
+| 8 | 18.900 | 14.888 |
+| 16 | 22.913 | 21.225 |
+| inf | 24.000 | 24.000 |
+
+For the local writer, instant/best cost is 1.157 and no-write/best is 2.849.
+Localization remains 1.000 at every tested timescale.
+
+Fast local WRITE therefore does not destroy identity evidence in this high-SNR
+toy. Its penalty is HOME overshoot from overlapping coarse/fine
+backprojections. The pulse-history estimator attacker removes that fast-write
+penalty and is best at instantaneous update.
