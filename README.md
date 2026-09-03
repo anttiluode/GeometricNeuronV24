@@ -249,6 +249,81 @@ that neurons cannot communicate local state by other mechanisms.
 See [the full Gate 5 boundary](docs/GATE5_NMDA_BRIDGE.md) and
 [the experiment](experiments/gate5_nmda_observability.py).
 
+## Gate 6 - PerceptionLab is back: memory changes future sensing
+
+The neuron bridge ended at Gate 5. Gate 6 returns to the old
+PerceptionLab loop:
+
+```text
+remember -> predict -> HOME surprise -> pay for a look
+         -> move address/scale -> WRITE correction -> remember
+```
+
+A 32x32 structured field translates one pixel per step. One of eight known
+4x4 anomaly prototypes can appear for eight steps. A free whole-field scalar
+HOME pulse detects that mass changed but cannot say where. Paid lenses can move
+address and use 16x16, 8x8 or 4x4 averages.
+
+Across 20 seeds:
+
+```text
+policy                         paid probes   pre-MSE    onset probes   repeat paid looks
+
+ACTIVE_WRITE_MULTISCALE          42.00       0.001563      4.38             0
+ACTIVE_NOWRITE_MULTISCALE       280.00       0.006667      4.38            56
+ACTIVE_WRITE_FINE                42.00       0.001563      4.38             0
+RANDOM_WRITE_MULTISCALE          56.60       0.001729      5.08             1.6
+```
+
+The writer localized every anomaly onset correctly.
+
+Relative to the identical active reader with its durable write erased:
+
+```text
+prediction-MSE ratio          0.234
+paid-probe ratio              0.150
+repeated-look ratio           0.000
+```
+
+So the main result is:
+
+> **persistent spatial WRITE changes future sensing.**
+
+The original multiscale subclaim failed. Raw predictive variance used exactly
+as many onset probes as fine-only search: **4.375 vs 4.375**. It was attracted
+to the large amplitude of fine lenses rather than the best partition of the
+remaining hypotheses.
+
+That negative produced Gate 6B, explicitly post-result: select the next lens by
+expected Bayesian information gain instead of raw variance.
+
+```text
+raw variance multiscale       4.375 probes
+fine-only                     4.375
+expected information          3.000
+
+information / fine            0.686
+localization                  1.000
+scale sequence                16 -> 8 -> 4   on 160 / 160 searches
+```
+
+Classification:
+
+> **`PERSISTENT_WRITE_CHANGES_FUTURE_SENSING_BUT_MULTISCALE_NOT_EARNED`**
+
+Post-result audit:
+
+> **`INFORMATION_GAIN_UNLOCKS_COARSE_TO_FINE_SEARCH_POSTHOC`**
+
+This is Geometric Neuron in the original PerceptionLab sense again: the point
+of memory is not merely that a state exists. The write changes the prediction,
+which changes surprise, which changes whether and where another measurement is
+purchased.
+
+See [the full Gate 6 note](docs/GATE6_PERCEPTIONLAB_MEMORY.md),
+[the persistent-memory experiment](experiments/gate6_perceptionlab_memory.py),
+and [the post-result information policy](experiments/gate6b_information_policy.py).
+
 ## The adjoint: what V24 uses, and what it does not claim
 
 For a static linear measurement stack `y = Hx`, the squared-error gradient is simply
@@ -292,43 +367,43 @@ python experiments/gate2_robustness.py
 
 Every experiment writes a machine-readable JSON receipt under `results/` and exits nonzero if its own locked gate fails. The robustness audit exits successfully when the mechanism-level replication succeeds while preserving the failed original margin as its scientific classification.
 
-## The next gate - back to PerceptionLab
+## The next gate - learn what deserves to be remembered
 
-The neuron bridge has now done its job.
+Gate 6 still receives a finite anomaly dictionary and a known transport law.
+That is now the obvious artificial support to remove.
 
-Gate 4 showed that address can open algebraic observability on a real
-morphology. Gate 5 showed that the tested HUMAN NMDA feedback does not turn
-that severely compressed soma channel into a detailed branch-state observer.
+The next serious PerceptionLab experiment should let recurring residuals compete
+to become persistent prototypes.
 
-So V24 returns to the synthetic question that was stronger all along:
+A candidate residual should earn durable state only if remembering it later
+reduces prediction error or measurement cost on held-out recurrence. Rare or
+one-off surprises should decay instead of becoming ontology.
+
+That would make the loop:
 
 ```text
-remember
+surprise
    |
-predict
+temporary local trace
    |
-measure surprise
+does this residual recur / predict future evidence?
    |
-pay only when surprise/ambiguity justifies another look
+   +-- no  -> decay
    |
-move address / lens scale
-   |
-write the correction back into persistent spatial state
+   +-- yes -> consolidate prototype
+                 |
+                 v
+          future active sampling
 ```
 
-The next experiment should make **history change future sensing**. A persistent
-local write must reduce the need to re-measure the same recurring surprise;
-prediction errors should choose when and where to spend a bounded probe budget.
-The attacker is the same active reader with its write memory erased.
-
-This is Geometric Neuron in the old PerceptionLab sense again: addressable
-spatial read/write and an active sampling policy, not a claim that a biological
-neuron literally implements the software.
+The attacker is a cache that remembers every residual equally. If selective
+consolidation cannot beat that cache under a fixed memory budget, there is no
+earned "perceptual ontology" yet.
 
 See [`METHOD.md`](METHOD.md), [`RESULTS.md`](RESULTS.md), and [`MORGUE.md`](MORGUE.md).
 
 ---
 
-**Current boundary:** V24 has earned addressable scalar read/write, active hidden-law identification, persistent operator writes, and a real-morphology observability bridge. The tested HUMAN NMDA law **did not** rescue the weak soma-observability directions. The project now returns to synthetic PerceptionLab-style active sensing rather than adding another biological rescue mechanism.
+**Current boundary:** V24 has returned to synthetic PerceptionLab mode. Persistent spatial writes now causally reduce future sensing cost, and a post-result information-gain policy produces a reproducible coarse-to-fine 16→8→4 search. The anomaly dictionary and transport law are still supplied; learning what deserves to become a durable prototype is the next open problem.
 
 *Do not hype. Do not lie. Just show.*
