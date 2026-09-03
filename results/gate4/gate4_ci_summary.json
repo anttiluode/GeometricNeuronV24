@@ -1,0 +1,52 @@
+{
+  "gate": 4,
+  "summary_type": "ci_summary",
+  "source_run_id": 33721598157,
+  "classification": "RANK_OPENS_BUT_1UV_SOMA_IDENTITY_GATE_FAILS",
+  "strict_gate_passed": false,
+  "strict_requirements_passed": 5,
+  "strict_requirements_total": 6,
+  "morphology": {
+    "identifier": "1125",
+    "nodes": 12632,
+    "eligible_dendritic_sections": 182
+  },
+  "protocol": {
+    "hidden_parameters": 12,
+    "candidate_probes": 144,
+    "probe_budget": 12,
+    "soma_noise_rms_mV": 0.001
+  },
+  "policies": {
+    "fixed_one_address_vary_scale": {
+      "numerical_rank": 2,
+      "smallest_singular_mV": 7.3701e-68,
+      "noise_visible_rank": 1,
+      "identity_accuracy": 0.372
+    },
+    "active_point_only": {
+      "numerical_rank": 12,
+      "smallest_singular_mV": 5.9495e-05,
+      "noise_visible_rank": 7,
+      "identity_accuracy": 0.761
+    },
+    "active_multiscale": {
+      "numerical_rank": 12,
+      "smallest_singular_mV": 6.3980e-05,
+      "noise_visible_rank": 7,
+      "identity_accuracy": 0.779,
+      "selected_scale_counts": {"0.0": 3, "35.0": 2, "110.0": 7}
+    },
+    "random_multiscale": {
+      "median_numerical_rank": 9.0,
+      "median_smallest_singular_mV": 1.1154e-19,
+      "median_noise_visible_rank": 4.0
+    }
+  },
+  "finite_difference_relative_error": 0.0002,
+  "radius_flattened_attacker": {
+    "numerical_rank": 12,
+    "smallest_singular_mV": 0.00013080
+  },
+  "note": "The preregistered >=0.90 identity criterion at 1 uV RMS soma noise failed and was not lowered."
+}
