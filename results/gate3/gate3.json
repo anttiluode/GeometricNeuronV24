@@ -1,0 +1,53 @@
+{
+  "gate": 3,
+  "name": "read_write_observability",
+  "seed": 24031976,
+  "passed": true,
+  "classification": "READ_WRITE_SEPARATES_STATE_EXCITATION_FROM_PERSISTENT_OPERATOR_CHANGE",
+  "gate3a": {
+    "classification": "LOCALIZED_STATE_WRITE_BREAKS_EXACT_READ_NULL",
+    "passed": true,
+    "max_hypothesis_spread": {
+      "read_only_zero": 0,
+      "uniform_write": 0,
+      "localized_write": 0.68
+    },
+    "active": {
+      "final_accuracy": 1
+    },
+    "random": {
+      "final_accuracy": 0.35546875
+    },
+    "write_l2_energy": {
+      "uniform": 1,
+      "localized": 1
+    }
+  },
+  "gate3b": {
+    "classification": "PERSISTENT_OPERATOR_WRITE_REMAINS_ADDRESSABLY_OBSERVABLE_AFTER_RESET",
+    "passed": true,
+    "fast_state_erased_before_diagnostic": true,
+    "write_identity_available_to_observer": false,
+    "max_hypothesis_spread": {
+      "no_operator_write": 0,
+      "persistent_operator_write": 0.07560450108078143
+    },
+    "noise_aware": {
+      "final_accuracy": 1
+    },
+    "raw_variance": {
+      "final_accuracy": 0.3671875
+    },
+    "random": {
+      "final_accuracy": 0.48046875
+    },
+    "noise_sigma_by_scale": {
+      "2": 0.0015859375,
+      "4": 0.0056875,
+      "8": 0.0385,
+      "16": 0.301
+    }
+  },
+  "scope": "Gate 3A writes fast state but leaves the operator fixed. Gate 3B writes a local operator parameter, then erases fast state and write identity before a public diagnostic load. Both are finite controlled law families.",
+  "provenance": "Headline values copied from successful GitHub Actions run 33720330329 on main."
+}
