@@ -113,3 +113,32 @@ steps instead of zero.
 For this architecture, memory earns its name only when the write changes the
 next prediction and therefore the next sensing action.
 
+
+
+### “Fast same-field WRITE necessarily destroys the next measurement”
+
+Not in Gate 6C's current high-SNR assay.
+
+Moving WRITE between the 16 -> 8 -> 4 probes and sweeping its time constant
+leaves anomaly localization at 1.000 for every tested value from instantaneous
+WRITE through no WRITE.
+
+Fast local WRITE is still worse than an intermediate rate, but for a different
+reason: nested local backprojections over-correct the spatial field and push the
+free HOME residual negative while the anomaly is still present. That creates
+extra verification pulses.
+
+So the literal “broken copy destroys identity evidence” claim is not earned
+here.
+
+### “The intermediate write timescale is a universal requirement”
+
+No.
+
+A HISTORY_REPLAY attacker stores every pulse equation and recomputes a
+minimum-norm field consistent with the accumulated history. It removes the
+fast-write penalty entirely and is best at instantaneous update (5.625 probes
+versus 8.425 at the best local-field timescale).
+
+The timescale optimum is therefore conditional on refusing that extra
+bookkeeping and using only local writes into the addressed spatial field.
