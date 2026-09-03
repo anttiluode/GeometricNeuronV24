@@ -1,0 +1,46 @@
+{
+  "audit": "gate6c_write_timescale",
+  "post_result": true,
+  "classification": "INTERMEDIATE_LOCAL_WRITE_TIMESCALE_MINIMIZES_PROBES_BUT_HISTORY_ATTACKER_REMOVES_FAST_WRITE_PENALTY",
+  "copy_worry": "IDENTITY_EVIDENCE_NOT_CORRUPTED_IN_THIS_HIGH_SNR_TOY",
+  "probe_interval_units": 1.0,
+  "write_rule": "x <- x + alpha * residual * h / ||h||^2; alpha = 1-exp(-1/tau)",
+  "tau_over_probe_interval": ["0","0.25","0.5","1","2","4","8","16","inf"],
+  "rules": {
+    "LOCAL_SAME_FIELD": {
+      "0": {"trials":80,"paid_probes_mean":9.75,"paid_probes_min":3,"paid_probes_max":24,"repeated_paid_steps_mean":4.575,"localization_accuracy":1.0,"negative_home_triggers_mean":3.4875,"final_mse_mean":0.004734405158803098,"final_home_residual_mean":-0.0034619560274021287,"scale_sequences":{"16->8->4":167}},
+      "0.25": {"trials":80,"paid_probes_mean":9.75,"paid_probes_min":3,"paid_probes_max":24,"repeated_paid_steps_mean":4.575,"localization_accuracy":1.0,"negative_home_triggers_mean":3.4875,"final_mse_mean":0.004717972367779212,"final_home_residual_mean":-0.0032363473507381474,"scale_sequences":{"16->8->4":167}},
+      "0.5": {"trials":80,"paid_probes_mean":9.6375,"paid_probes_min":3,"paid_probes_max":24,"repeated_paid_steps_mean":4.3375,"localization_accuracy":1.0,"negative_home_triggers_mean":3.1875,"final_mse_mean":0.004676690502345086,"final_home_residual_mean":-0.0018293894790114083,"scale_sequences":{"16->8->4":172}},
+      "1": {"trials":80,"paid_probes_mean":8.425,"paid_probes_min":3,"paid_probes_max":24,"repeated_paid_steps_mean":2.425,"localization_accuracy":1.0,"negative_home_triggers_mean":0.925,"final_mse_mean":0.004873351393280543,"final_home_residual_mean":0.0006819094492328086,"scale_sequences":{"16->8->4":200}},
+      "2": {"trials":80,"paid_probes_mean":10.175,"paid_probes_min":3,"paid_probes_max":24,"repeated_paid_steps_mean":2.4,"localization_accuracy":1.0,"negative_home_triggers_mean":0.0125,"final_mse_mean":0.0051106915433625595,"final_home_residual_mean":0.0023587573717851616,"scale_sequences":{"16->8->4":271}},
+      "4": {"trials":80,"paid_probes_mean":14.1,"paid_probes_min":6,"paid_probes_max":24,"repeated_paid_steps_mean":3.7,"localization_accuracy":1.0,"negative_home_triggers_mean":0.0,"final_mse_mean":0.005352413606899085,"final_home_residual_mean":0.0035646036811033633,"scale_sequences":{"16->8->4":376}},
+      "8": {"trials":80,"paid_probes_mean":18.9,"paid_probes_min":9,"paid_probes_max":24,"repeated_paid_steps_mean":5.3,"localization_accuracy":1.0,"negative_home_triggers_mean":0.0,"final_mse_mean":0.005698308755277485,"final_home_residual_mean":0.004767277977175678,"scale_sequences":{"16->8->4":504}},
+      "16": {"trials":80,"paid_probes_mean":22.9125,"paid_probes_min":15,"paid_probes_max":24,"repeated_paid_steps_mean":6.6375,"localization_accuracy":1.0,"negative_home_triggers_mean":0.0,"final_mse_mean":0.006388402664150726,"final_home_residual_mean":0.0064409836779276055,"scale_sequences":{"16->8->4":611}},
+      "inf": {"trials":80,"paid_probes_mean":24.0,"paid_probes_min":24,"paid_probes_max":24,"repeated_paid_steps_mean":7.0,"localization_accuracy":1.0,"negative_home_triggers_mean":0.0,"final_mse_mean":0.010000000000000004,"final_home_residual_mean":0.012499999999999999,"scale_sequences":{"16->8->4":640}}
+    },
+    "HISTORY_REPLAY": {
+      "0": {"trials":80,"paid_probes_mean":5.625,"paid_probes_min":3,"paid_probes_max":24,"repeated_paid_steps_mean":0.875,"localization_accuracy":1.0,"negative_home_triggers_mean":0.0,"final_mse_mean":0.004054622974919412,"final_home_residual_mean":0.001580701617361829,"scale_sequences":{"16->8->4":150}},
+      "0.25": {"trials":80,"paid_probes_mean":5.625,"paid_probes_min":3,"paid_probes_max":24,"repeated_paid_steps_mean":0.875,"localization_accuracy":1.0,"negative_home_triggers_mean":0.0,"final_mse_mean":0.00405614380051776,"final_home_residual_mean":0.001610419511448401,"scale_sequences":{"16->8->4":150}},
+      "0.5": {"trials":80,"paid_probes_mean":5.7,"paid_probes_min":3,"paid_probes_max":24,"repeated_paid_steps_mean":0.9,"localization_accuracy":1.0,"negative_home_triggers_mean":0.0,"final_mse_mean":0.004132777622429279,"final_home_residual_mean":0.0018142114076298947,"scale_sequences":{"16->8->4":152}},
+      "1": {"trials":80,"paid_probes_mean":6.075,"paid_probes_min":3,"paid_probes_max":24,"repeated_paid_steps_mean":1.025,"localization_accuracy":1.0,"negative_home_triggers_mean":0.0,"final_mse_mean":0.004500287758617849,"final_home_residual_mean":0.002301672396936752,"scale_sequences":{"16->8->4":162}},
+      "2": {"trials":80,"paid_probes_mean":7.6125,"paid_probes_min":3,"paid_probes_max":24,"repeated_paid_steps_mean":1.5375,"localization_accuracy":1.0,"negative_home_triggers_mean":0.0,"final_mse_mean":0.004442599621854589,"final_home_residual_mean":0.0028245740296145303,"scale_sequences":{"16->8->4":203}},
+      "4": {"trials":80,"paid_probes_mean":10.2,"paid_probes_min":6,"paid_probes_max":24,"repeated_paid_steps_mean":2.4,"localization_accuracy":1.0,"negative_home_triggers_mean":0.0,"final_mse_mean":0.004375796745316786,"final_home_residual_mean":0.0032997010250962163,"scale_sequences":{"16->8->4":272}},
+      "8": {"trials":80,"paid_probes_mean":14.8875,"paid_probes_min":9,"paid_probes_max":24,"repeated_paid_steps_mean":3.9625,"localization_accuracy":1.0,"negative_home_triggers_mean":0.0,"final_mse_mean":0.004377403029691522,"final_home_residual_mean":0.0037640144441748887,"scale_sequences":{"16->8->4":397}},
+      "16": {"trials":80,"paid_probes_mean":21.225,"paid_probes_min":15,"paid_probes_max":24,"repeated_paid_steps_mean":6.075,"localization_accuracy":1.0,"negative_home_triggers_mean":0.0,"final_mse_mean":0.004614114127199147,"final_home_residual_mean":0.004660319606830591,"scale_sequences":{"16->8->4":566}},
+      "inf": {"trials":80,"paid_probes_mean":24.0,"paid_probes_min":24,"paid_probes_max":24,"repeated_paid_steps_mean":7.0,"localization_accuracy":1.0,"negative_home_triggers_mean":0.0,"final_mse_mean":0.010000000000000004,"final_home_residual_mean":0.012499999999999999,"scale_sequences":{"16->8->4":640}}
+    }
+  },
+  "summary": {
+    "best_local_tau_over_probe_interval": "1",
+    "best_local_paid_probes": 8.425,
+    "instant_local_paid_probes": 9.75,
+    "no_write_local_paid_probes": 24.0,
+    "instant_over_best_local_cost_ratio": 1.1572700296735905,
+    "no_write_over_best_local_cost_ratio": 2.8486646884272995,
+    "best_history_tau_over_probe_interval": "0",
+    "instant_history_paid_probes": 5.625,
+    "minimum_localization_accuracy_local": 1.0,
+    "minimum_localization_accuracy_history": 1.0
+  },
+  "interpretation_boundary": "The local same-field writer has a real control-timescale tradeoff, but fast WRITE did not destroy identity evidence here. Its cost comes from coarse/fine backprojections overshooting HOME. The history-replay state-estimator attacker removes that fast-write penalty by keeping extra measurement bookkeeping."
+}
