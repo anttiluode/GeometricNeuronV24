@@ -1,0 +1,113 @@
+{
+  "gate": 0,
+  "name": "addressed_multiscale_observability",
+  "classification": "LENS_ALGEBRA_EARNED_RANDOM_IMAGE_NULL_CONFIRMED",
+  "passed": true,
+  "seed": 24031976,
+  "image_side": 32,
+  "hidden_degrees": 1024,
+  "pairs": [
+    {
+      "scales": [
+        8,
+        16
+      ],
+      "rows": 320,
+      "observed_rank": 256,
+      "predicted_rank": 256,
+      "gain_over_finer_alone": 0
+    },
+    {
+      "scales": [
+        12,
+        18
+      ],
+      "rows": 468,
+      "observed_rank": 432,
+      "predicted_rank": 432,
+      "gain_over_finer_alone": 108
+    },
+    {
+      "scales": [
+        15,
+        16
+      ],
+      "rows": 481,
+      "observed_rank": 480,
+      "predicted_rank": 480,
+      "gain_over_finer_alone": 224
+    }
+  ],
+  "dyadic": {
+    "scales": [
+      1,
+      2,
+      4,
+      8,
+      16
+    ],
+    "rows": 341,
+    "rank": 256,
+    "redundant_rows": 85
+  },
+  "nullspace_witness": {
+    "scales": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "rows": 85,
+    "rank": 64,
+    "null_dimension": 960,
+    "witness_pulse_max_abs": 0.0,
+    "two_secret_pulse_max_abs_difference": 1.1102230246251565e-16
+  },
+  "software_adjoint": {
+    "finite_difference_directional": -0.004302784795129355,
+    "adjoint_directional": -0.004302784585461239,
+    "relative_error": 2.0966811620226622e-10
+  },
+  "random_image_null": {
+    "budget": 192,
+    "trials": 256,
+    "expected_unobserved_energy": 0.8125,
+    "spread_between_designs": 0.002519157521534421,
+    "unit_energy_rows_for_fairness": true,
+    "noise_sigma": 0.02,
+    "designs": {
+      "pixel_raster": {
+        "rank": 192,
+        "mean_unobserved_energy": 0.8132394205078645,
+        "sem_unobserved_energy": 0.0010434565266626832,
+        "condition_number": 1.0,
+        "mean_noise_excess": 7.499915772482104e-05
+      },
+      "random_orthonormal": {
+        "rank": 192,
+        "mean_unobserved_energy": 0.81072026298633,
+        "sem_unobserved_energy": 0.0010957063329370327,
+        "condition_number": 1.0000000000000024,
+        "mean_noise_excess": 7.566729592189896e-05
+      },
+      "addressed_box": {
+        "rank": 192,
+        "mean_unobserved_energy": 0.8115375861796605,
+        "sem_unobserved_energy": 0.0011181508969335132,
+        "condition_number": 1.642354627953066,
+        "mean_noise_excess": 7.735460118957014e-05
+      }
+    }
+  },
+  "locked_requirements": {
+    "pair_rank_prediction_error_eq_0": true,
+    "dyadic_rank_eq_finest_rank": true,
+    "nested_pair_adds_no_rank": true,
+    "incommensurate_pair_adds_rank": true,
+    "explicit_null_witness": true,
+    "two_distinct_secrets_same_pulses": true,
+    "adjoint_matches_finite_difference": true,
+    "random_image_designs_rank_matched": true,
+    "random_image_null_spread_lt_0_015": true
+  }
+}

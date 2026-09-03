@@ -1,0 +1,89 @@
+{
+  "audit": "gate2_robustness",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "mechanism_replicated": true,
+  "original_locked_margin_replicated": false,
+  "original_gate_pass_count": 5,
+  "original_gate_total": 10,
+  "classification": "MECHANISM_REPLICATES_LOCKED_MARGIN_DOES_NOT",
+  "active_exact_accuracy": {
+    "mean": 1.0,
+    "min": 1.0,
+    "max": 1.0,
+    "per_seed": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  "random_exact_accuracy": {
+    "mean": 0.7958333333333333,
+    "min": 0.7604166666666666,
+    "max": 0.828125,
+    "per_seed": [
+      0.7916666666666666,
+      0.8177083333333334,
+      0.8125,
+      0.796875,
+      0.7864583333333334,
+      0.7604166666666666,
+      0.7604166666666666,
+      0.8020833333333334,
+      0.828125,
+      0.8020833333333334
+    ]
+  },
+  "fixed_exact_accuracy": {
+    "mean": 0.565625,
+    "min": 0.4791666666666667,
+    "max": 0.6302083333333334,
+    "per_seed": [
+      0.5520833333333334,
+      0.5520833333333334,
+      0.6302083333333334,
+      0.5885416666666666,
+      0.5833333333333334,
+      0.5520833333333334,
+      0.4791666666666667,
+      0.578125,
+      0.5625,
+      0.578125
+    ]
+  },
+  "active_minus_random": {
+    "mean": 0.20416666666666666,
+    "min": 0.171875,
+    "max": 0.23958333333333337,
+    "per_seed": [
+      0.20833333333333337,
+      0.18229166666666663,
+      0.1875,
+      0.203125,
+      0.21354166666666663,
+      0.23958333333333337,
+      0.23958333333333337,
+      0.19791666666666663,
+      0.171875,
+      0.19791666666666663
+    ]
+  },
+  "note": "This audit was added after the default-seed Gate 2 result. The original >=0.20 active-minus-random requirement is retained and fails on half the audit seeds; no threshold was lowered."
+}

@@ -1,0 +1,89 @@
+{
+  "gate": 1,
+  "name": "structured_world_address_policy",
+  "classification": "ADDRESS_POLICY_HELPS_STRUCTURED_WORLDS_BUT_GLOBAL_ORACLE_WINS",
+  "passed": true,
+  "seed": 24031976,
+  "image_side": 16,
+  "train_worlds": 768,
+  "test_worlds": 256,
+  "prior_components": 128,
+  "noise_sigma": 0.03,
+  "budgets": [
+    8,
+    16,
+    32,
+    64,
+    96
+  ],
+  "relative_mse": {
+    "covariance_guided_lens": [
+      0.3444011741020088,
+      0.2291031485634887,
+      0.1475109321123757,
+      0.10167718168833627,
+      0.07368434297271433
+    ],
+    "random_addressed_lens": [
+      0.42296750602062483,
+      0.31511575410611925,
+      0.2218591563330065,
+      0.1256171874521406,
+      0.09711485929339031
+    ],
+    "fixed_fine_pixels": [
+      0.5216523935277755,
+      0.3366847871531465,
+      0.22143054682490754,
+      0.14149722046649982,
+      0.10922820965022928
+    ],
+    "random_global_masks": [
+      0.5083470974891318,
+      0.3280404240423167,
+      0.20068372054836392,
+      0.12462011710506309,
+      0.09099279811913388
+    ],
+    "pca_global_oracle": [
+      0.2457680012471617,
+      0.13530236970919352,
+      0.07911480857954216,
+      0.043137034046629275,
+      0.031662096809548484
+    ]
+  },
+  "budget_64": {
+    "guided": 0.10167718168833627,
+    "random_addressed": 0.1256171874521406,
+    "fixed_fine_pixels": 0.14149722046649982,
+    "random_global_masks": 0.12462011710506309,
+    "pca_global_oracle": 0.043137034046629275,
+    "guided_gain_vs_random_addressed": 0.1905790620644593,
+    "guided_gain_vs_fixed_pixels": 0.2814192296278438
+  },
+  "guided_first_96_scale_counts": {
+    "1": 1,
+    "2": 3,
+    "3": 6,
+    "4": 2,
+    "5": 7,
+    "6": 1,
+    "7": 4,
+    "9": 2,
+    "10": 3,
+    "11": 3,
+    "12": 6,
+    "13": 4,
+    "14": 8,
+    "15": 10,
+    "16": 36
+  },
+  "locked_requirements": {
+    "guided_beats_random_addressed_by_10pct": true,
+    "guided_beats_fixed_pixels_by_10pct": true,
+    "global_oracle_remains_upper_bound": true,
+    "more_than_one_lens_scale_selected": true
+  },
+  "scope": "The selector knows the training ensemble covariance and the lens family, but never sees a held-out secret before selecting its addresses."
+}

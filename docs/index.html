@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A scalar-pulse laboratory for addressed multiscale observation of hidden spatial fields.">
+  <title>Geometric Neuron V24 - The Addressable Lens</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #e7edf6;
+      --muted: #91a0b5;
+      --dim: #667388;
+      --bg: #071019;
+      --panel: #0d1824;
+      --panel-2: #111f2e;
+      --line: #26384a;
+      --teal: #59e1c2;
+      --amber: #ffbb55;
+      --red: #ff6b72;
+      --blue: #66a8ff;
+      --focus: #f6dd89;
+      --shadow: 0 18px 60px rgba(0, 0, 0, .28);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { background: var(--bg); }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 14% 6%, rgba(63, 142, 164, .13), transparent 28rem),
+        radial-gradient(circle at 88% 18%, rgba(247, 164, 65, .08), transparent 24rem),
+        linear-gradient(180deg, #08121c 0%, #060d14 100%);
+      font: 16px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button, input, select { font: inherit; }
+
+    button, select, input[type="number"] {
+      color: var(--ink);
+      background: #101d29;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    button {
+      min-height: 42px;
+      padding: .62rem .9rem;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: .01em;
+      transition: border-color .15s ease, background .15s ease, transform .15s ease;
+    }
+
+    button:hover { border-color: #4f6b83; background: #152535; }
+    button:active { transform: translateY(1px); }
+    button:focus-visible, select:focus-visible, input:focus-visible {
+      outline: 3px solid rgba(246, 221, 137, .42);
+      outline-offset: 2px;
+    }
+
+    button.primary { color: #051611; background: var(--teal); border-color: var(--teal); }
+    button.primary:hover { background: #77ebd1; }
+    button.warn { color: #211202; background: var(--amber); border-color: var(--amber); }
+    button.ghost { background: transparent; }
+
+    .shell { width: min(1480px, calc(100% - 28px)); margin: 0 auto; padding: 18px 0 70px; }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      padding: 2px 2px 16px;
+    }
+
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .aperture {
+      width: 44px;
+      height: 44px;
+      border: 1px solid #44627b;
+      border-radius: 50%;
+      background: repeating-conic-gradient(from 7deg, #183449 0 27deg, #09131c 28deg 55deg);
+      box-shadow: inset 0 0 0 9px #09131c, inset 0 0 0 10px #4d728b;
+      flex: 0 0 auto;
+    }
+
+    h1 { margin: 0; font-size: clamp(1.35rem, 2.4vw, 2rem); letter-spacing: -.025em; line-height: 1.1; }
+    .kicker { margin: .2rem 0 0; color: var(--muted); font: 700 .78rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .11em; text-transform: uppercase; }
+    .header-note { max-width: 560px; margin: 3px 0 0; color: var(--muted); font-size: .92rem; text-align: right; }
+
+    .bench {
+      display: grid;
+      grid-template-columns: minmax(280px, .86fr) minmax(470px, 1.45fr) minmax(290px, .92fr);
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(16, 31, 45, .96), rgba(10, 22, 32, .96));
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      min-height: 52px;
+      padding: 11px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(9, 19, 29, .72);
+    }
+
+    .panel-head h2 { margin: 0; font-size: .94rem; letter-spacing: .03em; }
+    .eyebrow { color: var(--dim); font: 700 .72rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace; text-transform: uppercase; letter-spacing: .1em; }
+    .panel-body { padding: 14px; }
+
+    .canvas-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      background: #04090d;
+      border: 1px solid #23384a;
+      border-radius: 9px;
+      overflow: hidden;
+    }
+
+    canvas.image { width: 100%; height: 100%; display: block; image-rendering: pixelated; }
+
+    #secretOverlay {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      color: #c4d0dc;
+      background: rgba(5, 13, 20, .9);
+      backdrop-filter: blur(9px);
+      font: 800 .82rem/1.3 ui-monospace, SFMono-Regular, Consolas, monospace;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      transition: opacity .18s ease;
+    }
+
+    #secretOverlay.open { opacity: 0; }
+
+    #addressOverlay {
+      position: absolute;
+      border: 2px solid var(--amber);
+      background: rgba(255, 187, 85, .12);
+      box-shadow: 0 0 0 1px rgba(4, 9, 13, .8), 0 0 20px rgba(255, 187, 85, .16);
+      pointer-events: none;
+    }
+
+    .image-caption { display: flex; justify-content: space-between; gap: 12px; margin-top: 9px; color: var(--muted); font-size: .82rem; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+
+    .optics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    label { display: grid; gap: 6px; color: var(--muted); font-size: .8rem; font-weight: 700; }
+    select, input[type="number"] { width: 100%; min-height: 40px; padding: .45rem .55rem; }
+    input[type="range"] { width: 100%; accent-color: var(--teal); }
+
+    .lens-readout {
+      padding: 13px;
+      border: 1px solid #2c465b;
+      border-radius: 10px;
+      background: #08131d;
+      margin-bottom: 14px;
+    }
+
+    .lens-value { display: flex; justify-content: space-between; align-items: baseline; gap: 15px; }
+    .lens-value strong { font: 750 clamp(1.7rem, 4vw, 2.7rem)/1 ui-monospace, SFMono-Regular, Consolas, monospace; color: var(--amber); }
+    .lens-value span { color: var(--muted); font-size: .78rem; }
+    .address-line { margin-top: 10px; color: #c0ccd8; font: .82rem/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; }
+
+    .button-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .button-grid .wide { grid-column: 1 / -1; }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .metric { padding: 10px; border: 1px solid var(--line); border-radius: 9px; background: #09131d; min-width: 0; }
+    .metric span { display: block; color: var(--dim); font: 700 .68rem/1.2 ui-monospace, SFMono-Regular, Consolas, monospace; text-transform: uppercase; letter-spacing: .08em; }
+    .metric strong { display: block; margin-top: 5px; overflow: hidden; text-overflow: ellipsis; font: 750 1.12rem/1.1 ui-monospace, SFMono-Regular, Consolas, monospace; }
+
+    #pulseChart { width: 100%; height: 130px; display: block; border: 1px solid var(--line); border-radius: 9px; background: #071019; }
+    .chart-caption { display: flex; justify-content: space-between; margin-top: 7px; color: var(--dim); font-size: .75rem; }
+
+    .maps { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .maps h3 { margin: 0 0 7px; font-size: .78rem; color: var(--muted); }
+
+    .receipt-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .receipt {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: rgba(11, 24, 35, .8);
+    }
+    .receipt strong { display: block; margin: 5px 0 4px; font: 750 1.3rem/1.1 ui-monospace, SFMono-Regular, Consolas, monospace; color: var(--teal); }
+    .receipt p { margin: 0; color: var(--muted); font-size: .79rem; }
+
+    .lower {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .explain { padding: 20px; }
+    .explain h2 { margin: 0 0 8px; font-size: 1.08rem; }
+    .explain p { margin: .6rem 0; color: #b4c0ce; }
+    .equation { margin: 15px 0; padding: 13px 15px; border-left: 3px solid var(--teal); background: #08131d; font: 1rem/1.6 ui-monospace, SFMono-Regular, Consolas, monospace; overflow-x: auto; }
+
+    .ledger { display: grid; gap: 8px; margin-top: 12px; }
+    .ledger-item { display: grid; grid-template-columns: 58px 1fr; gap: 10px; align-items: start; padding-top: 9px; border-top: 1px solid var(--line); }
+    .tag { color: var(--teal); font: 800 .73rem/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .tag.kill { color: var(--red); }
+    .tag.open { color: var(--amber); }
+    .ledger-item p { margin: 0; color: var(--muted); font-size: .84rem; }
+
+    .null-card {
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid rgba(255, 107, 114, .42);
+      border-radius: 10px;
+      background: rgba(62, 18, 27, .23);
+    }
+    .null-card strong { color: #ff9aa0; }
+    #nullStatus { margin: 7px 0 0; color: #d4bec2; font-size: .82rem; }
+
+    footer { margin-top: 22px; color: var(--dim); font-size: .78rem; text-align: center; }
+    footer a { color: #9ec8e8; }
+
+    @media (max-width: 1120px) {
+      .bench { grid-template-columns: minmax(280px, .9fr) minmax(440px, 1.25fr); }
+      .diagnostics { grid-column: 1 / -1; }
+      .diagnostics .panel-body { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      .receipt-strip { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 18px, 620px); padding-top: 10px; }
+      header { display: block; }
+      .header-note { margin-top: 12px; text-align: left; }
+      .bench, .lower { grid-template-columns: 1fr; }
+      .diagnostics { grid-column: auto; }
+      .diagnostics .panel-body { display: block; }
+      .metrics { grid-template-columns: 1fr 1fr; }
+      .receipt-strip { grid-template-columns: 1fr; }
+      .maps { margin-top: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div class="brand">
+        <div class="aperture" aria-hidden="true"></div>
+        <div>
+          <h1>Geometric Neuron V24</h1>
+          <p class="kicker">The addressable lens / Gate 0 instrument</p>
+        </div>
+      </div>
+      <p class="header-note">A hidden 32 x 32 field. One scalar detector. You choose where to look and at what scale. The address is part of the evidence.</p>
+    </header>
+
+    <section class="bench" aria-label="Addressed observation workbench">
+      <article class="panel">
+        <div class="panel-head">
+          <h2>Hidden field</h2>
+          <button id="revealButton" class="ghost" type="button" aria-pressed="false">Reveal</button>
+        </div>
+        <div class="panel-body">
+          <div id="secretWrap" class="canvas-wrap" title="Click to move the current address">
+            <canvas id="secretCanvas" class="image" width="320" height="320" aria-label="Hidden image field"></canvas>
+            <div id="addressOverlay" aria-hidden="true"></div>
+            <div id="secretOverlay">Blind to the detective</div>
+          </div>
+          <div class="image-caption">
+            <span id="worldLabel">random / 1024 unknowns</span>
+            <span class="mono" id="pixelCoordinate">address 0,0</span>
+          </div>
+          <div class="optics" style="margin-top:14px">
+            <label>World ensemble
+              <select id="worldType">
+                <option value="random">IID random - null</option>
+                <option value="structured">Structured blobs + edge</option>
+                <option value="nullpair">Null-pair witness</option>
+              </select>
+            </label>
+            <label>Random seed
+              <input id="seedInput" type="number" value="24" min="1" max="999999" step="1">
+            </label>
+          </div>
+          <button id="newWorldButton" class="wide" type="button" style="width:100%">Make new hidden world</button>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <div class="eyebrow">read gate</div>
+            <h2>Lens + address -> pulse</h2>
+          </div>
+          <button id="resetButton" class="ghost" type="button">Clear evidence</button>
+        </div>
+        <div class="panel-body">
+          <div class="optics">
+            <label>Lens side <span class="mono" id="scaleLabel">8 x 8</span>
+              <input id="scaleInput" type="range" min="1" max="32" value="8" step="1">
+            </label>
+            <div class="optics" style="margin:0">
+              <label>Row
+                <input id="rowInput" type="number" min="0" max="7" value="0">
+              </label>
+              <label>Column
+                <input id="colInput" type="number" min="0" max="7" value="0">
+              </label>
+            </div>
+          </div>
+
+          <div class="lens-readout" aria-live="polite">
+            <div class="lens-value">
+              <strong id="pulseValue">--</strong>
+              <span>one area-average scalar<br>no per-frame normalization</span>
+            </div>
+            <div id="addressLine" class="address-line">a = (scale 8, row 0, column 0)</div>
+          </div>
+
+          <div class="button-grid">
+            <button id="pulseButton" class="primary wide" type="button">Take one pulse</button>
+            <button id="scanButton" type="button">Scan this lens</button>
+            <button id="dyadicButton" type="button">Dyadic 1 -> 8</button>
+            <button id="coprimeButton" class="warn wide" type="button">Compare coprime 7 + 8</button>
+          </div>
+
+          <div class="metrics" aria-live="polite">
+            <div class="metric"><span>Pulses</span><strong id="probeCount">0</strong></div>
+            <div class="metric"><span>Rank</span><strong id="rankValue">0</strong></div>
+            <div class="metric"><span>Null dim</span><strong id="nullDimension">1024</strong></div>
+            <div class="metric"><span>Rel. MSE</span><strong id="mseValue">1.000</strong></div>
+          </div>
+
+          <canvas id="pulseChart" width="760" height="230" aria-label="History of scalar pulse measurements"></canvas>
+          <div class="chart-caption"><span>pulse history</span><span id="rankNote">address metadata retained</span></div>
+        </div>
+      </article>
+
+      <article class="panel diagnostics">
+        <div class="panel-head">
+          <div>
+            <div class="eyebrow">transpose view</div>
+            <h2>What the evidence touches</h2>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="maps">
+            <div>
+              <h3>Minimum-norm belief</h3>
+              <div class="canvas-wrap"><canvas id="beliefCanvas" class="image" width="256" height="256" aria-label="Current reconstruction"></canvas></div>
+            </div>
+            <div>
+              <h3>Latest adjoint blame</h3>
+              <div class="canvas-wrap"><canvas id="adjointCanvas" class="image" width="256" height="256" aria-label="Latest backprojected measurement residual"></canvas></div>
+            </div>
+          </div>
+
+          <div class="null-card">
+            <div class="eyebrow">exact counterexample</div>
+            <strong>Different world, same pulses</strong>
+            <p id="nullStatus">Choose “Null-pair witness,” then run Dyadic 1 -> 8. Every recorded pulse is blind to the red-blue pixel checkerboard added to the twin.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="receipt-strip" aria-label="Verified receipts">
+      <div class="receipt"><span class="eyebrow">Gate 0 / dyadic</span><strong>341 -> 256</strong><p>Complete scales 1, 2, 4, 8, 16 use 341 rows but expose only the 16 x 16 subspace.</p></div>
+      <div class="receipt"><span class="eyebrow">Gate 0 / coprime</span><strong>+224 rank</strong><p>A complete 15 x 15 lens adds 224 directions beside 16 x 16; only their shared constant direction overlaps.</p></div>
+      <div class="receipt"><span class="eyebrow">Gate 0 / random null</span><strong>0.0025 spread</strong><p>At matched rank 192, raster, random-global, and addressed-box rows recover the same random-image energy.</p></div>
+      <div class="receipt"><span class="eyebrow">Gate 1 / structured</span><strong>-28.1% MSE</strong><p>At 64 pulses, covariance-guided local addresses beat fixed fine pixels. The non-local PCA oracle still wins.</p></div>
+      <div class="receipt"><span class="eyebrow">Gate 2 / rule</span><strong>64 / 64</strong><p>Active addresses identify the controlled hidden law; 10-seed replication keeps 100%, while the locked margin passes 5/10.</p></div>
+    </section>
+
+    <section class="lower">
+      <article class="panel explain">
+        <h2>The small object underneath the old accident</h2>
+        <p>The old Perception Lab loop showed that sampling grid and tap location can change a feedback regime. V24 removes the thermostat first and asks the prior question cleanly: what can one scalar detector know when its readout can move?</p>
+        <div class="equation">address a = (scale, row, column)<br>pulse y = h<sub>a</sub><sup>T</sup>x<br>evidence Y = Hx</div>
+        <p>Resolution is the lens. Row and column are the address. The pulse has meaning only together with both. The transpose <span class="mono">H<sup>T</sup></span> paints a pulse error back into image space; here it is a software adjoint, not a claim that a physical device has performed backpropagation.</p>
+        <p>The next object is deliberately absent: <span class="mono">x(t+1) = G<sub>theta</sub>(x(t), write(t))</span>. V24 will add a changing field only after this static observation channel is understood.</p>
+      </article>
+
+      <article class="panel explain">
+        <h2>Claim ledger</h2>
+        <div class="ledger">
+          <div class="ledger-item"><span class="tag">[V]</span><p>Scale plus address defines an explicit linear measurement mask. The family’s rank and nullspace are measurable.</p></div>
+          <div class="ledger-item"><span class="tag">[V]</span><p>Nested dyadic scales add noise redundancy, but no new noiseless directions beyond the finest complete scale.</p></div>
+          <div class="ledger-item"><span class="tag">[V]</span><p>Non-nested grids can add rank. “Moiré buys rank” remains only shorthand for this exact partition result.</p></div>
+          <div class="ledger-item"><span class="tag kill">[K]</span><p>A changing lens does not beat information theory on arbitrary random images. Equal rank means equal expected captured energy.</p></div>
+          <div class="ledger-item"><span class="tag kill">[K]</span><p>The old ECG loop is not promoted into a memory, adjoint, or neuron. V21’s variance-thermostat diagnosis remains standing.</p></div>
+          <div class="ledger-item"><span class="tag open">[OPEN]</span><p>Can pulse history plus chosen writes identify a hidden growth law, then make future geometry more useful?</p></div>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      <a href="https://github.com/anttiluode/GeometricNeuronV24">source, experiments, and full receipts</a> - no neuron or biological-identification claim
+    </footer>
+  </main>
+
+  <script>
+    "use strict";
+
+    const SIDE = 32;
+    const WIDTH = SIDE * SIDE;
+    const state = {
+      seed: 24,
+      worldType: "random",
+      secret: new Float64Array(WIDTH),
+      twin: null,
+      estimate: new Float64Array(WIDTH),
+      probes: [],
+      values: [],
+      basis: [],
+      latestAdjoint: new Float64Array(WIDTH),
+      scale: 8,
+      row: 0,
+      col: 0,
+      revealed: false,
+      showTwin: false,
+      busy: false
+    };
+
+    const $ = (id) => document.getElementById(id);
+    const secretCanvas = $("secretCanvas");
+    const beliefCanvas = $("beliefCanvas");
+    const adjointCanvas = $("adjointCanvas");
+    const pulseChart = $("pulseChart");
+
+    function mulberry32(seed) {
+      let a = seed >>> 0;
+      return function random() {
+        a |= 0;
+        a = (a + 0x6D2B79F5) | 0;
+        let t = Math.imul(a ^ (a >>> 15), 1 | a);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    function gaussian(random) {
+      const u = Math.max(random(), 1e-12);
+      const v = random();
+      return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+    }
+
+    function makeRandomWorld(seed) {
+      const random = mulberry32(seed);
+      const world = new Float64Array(WIDTH);
+      for (let i = 0; i < WIDTH; i += 1) world[i] = gaussian(random);
+      return world;
+    }
+
+    function makeStructuredWorld(seed) {
+      const random = mulberry32(seed);
+      const world = new Float64Array(WIDTH);
+      const blobs = 2 + Math.floor(random() * 3);
+      for (let k = 0; k < blobs; k += 1) {
+        const cx = .08 + .84 * random();
+        const cy = .08 + .84 * random();
+        const sx = .06 + .22 * random();
+        const sy = .06 + .22 * random();
+        const amplitude = 1.3 * gaussian(random);
+        for (let y = 0; y < SIDE; y += 1) {
+          for (let x = 0; x < SIDE; x += 1) {
+            const px = (x + .5) / SIDE;
+            const py = (y + .5) / SIDE;
+            const exponent = -.5 * (((px - cx) / sx) ** 2 + ((py - cy) / sy) ** 2);
+            world[y * SIDE + x] += amplitude * Math.exp(exponent);
+          }
+        }
+      }
+      const x0 = Math.floor(random() * 18);
+      const y0 = Math.floor(random() * 18);
+      const x1 = Math.min(SIDE, x0 + 5 + Math.floor(random() * 13));
+      const y1 = Math.min(SIDE, y0 + 5 + Math.floor(random() * 13));
+      const step = .7 * gaussian(random);
+      for (let y = y0; y < y1; y += 1) {
+        for (let x = x0; x < x1; x += 1) world[y * SIDE + x] += step;
+      }
+      return world;
+    }
+
+    function checkerboardWitness() {
+      const witness = new Float64Array(WIDTH);
+      for (let y = 0; y < SIDE; y += 1) {
+        for (let x = 0; x < SIDE; x += 1) witness[y * SIDE + x] = ((x + y) % 2) * 2 - 1;
+      }
+      return witness;
+    }
+
+    function makeWorld() {
+      state.seed = Math.max(1, Number.parseInt($("seedInput").value, 10) || 24);
+      state.worldType = $("worldType").value;
+      const base = state.worldType === "structured" ? makeStructuredWorld(state.seed) : makeRandomWorld(state.seed);
+      state.secret = base;
+      state.twin = null;
+      state.revealed = false;
+      state.showTwin = false;
+      if (state.worldType === "nullpair") {
+        const witness = checkerboardWitness();
+        state.twin = new Float64Array(WIDTH);
+        for (let i = 0; i < WIDTH; i += 1) state.twin[i] = base[i] + .75 * witness[i];
+      }
+      clearEvidence();
+      renderAll();
+    }
+
+    function overlap1d(scale) {
+      const matrix = Array.from({ length: scale }, () => new Float64Array(SIDE));
+      for (let target = 0; target < scale; target += 1) {
+        const left = target / scale;
+        const right = (target + 1) / scale;
+        for (let source = 0; source < SIDE; source += 1) {
+          const sourceLeft = source / SIDE;
+          const sourceRight = (source + 1) / SIDE;
+          matrix[target][source] = scale * Math.max(0, Math.min(right, sourceRight) - Math.max(left, sourceLeft));
+        }
+      }
+      return matrix;
+    }
+
+    const overlapCache = new Map();
+    function maskFor(scale, row, col) {
+      if (!overlapCache.has(scale)) overlapCache.set(scale, overlap1d(scale));
+      const p = overlapCache.get(scale);
+      const mask = new Float64Array(WIDTH);
+      for (let y = 0; y < SIDE; y += 1) {
+        const wy = p[row][y];
+        if (wy === 0) continue;
+        for (let x = 0; x < SIDE; x += 1) mask[y * SIDE + x] = wy * p[col][x];
+      }
+      return mask;
+    }
+
+    function dot(a, b) {
+      let value = 0;
+      for (let i = 0; i < a.length; i += 1) value += a[i] * b[i];
+      return value;
+    }
+
+    function addBasis(mask) {
+      const residual = Float64Array.from(mask);
+      for (let pass = 0; pass < 2; pass += 1) {
+        for (const vector of state.basis) {
+          const coefficient = dot(residual, vector);
+          if (Math.abs(coefficient) < 1e-15) continue;
+          for (let i = 0; i < WIDTH; i += 1) residual[i] -= coefficient * vector[i];
+        }
+      }
+      const norm = Math.sqrt(dot(residual, residual));
+      const originalNorm = Math.sqrt(dot(mask, mask));
+      if (norm <= 1e-9 * Math.max(originalNorm, 1e-15)) return false;
+      for (let i = 0; i < WIDTH; i += 1) residual[i] /= norm;
+      state.basis.push(residual);
+      return true;
+    }
+
+    function updateEstimate(sweeps = 4) {
+      state.estimate.fill(0);
+      for (let sweep = 0; sweep < sweeps; sweep += 1) {
+        for (let p = 0; p < state.probes.length; p += 1) {
+          const mask = state.probes[p];
+          const norm2 = dot(mask, mask);
+          if (norm2 < 1e-15) continue;
+          const residual = state.values[p] - dot(mask, state.estimate);
+          const step = residual / norm2;
+          for (let i = 0; i < WIDTH; i += 1) state.estimate[i] += step * mask[i];
+        }
+      }
+    }
+
+    function takePulse(scale = state.scale, row = state.row, col = state.col, defer = false) {
+      const mask = maskFor(scale, row, col);
+      const predicted = dot(mask, state.estimate);
+      const observed = dot(mask, state.secret);
+      const residual = predicted - observed;
+      for (let i = 0; i < WIDTH; i += 1) state.latestAdjoint[i] = residual * mask[i];
+      state.probes.push(mask);
+      state.values.push(observed);
+      addBasis(mask);
+      if (!defer) {
+        updateEstimate(Math.min(10, 3 + Math.floor(state.probes.length / 50)));
+        $("pulseValue").textContent = observed.toFixed(5);
+        renderAll();
+      }
+      return observed;
+    }
+
+    async function scanScales(scales) {
+      if (state.busy) return;
+      state.busy = true;
+      setButtonsDisabled(true);
+      let count = 0;
+      for (const scale of scales) {
+        for (let row = 0; row < scale; row += 1) {
+          for (let col = 0; col < scale; col += 1) {
+            takePulse(scale, row, col, true);
+            count += 1;
+            if (count % 12 === 0) {
+              updateMetrics();
+              await new Promise((resolve) => window.setTimeout(resolve, 0));
+            }
+          }
+        }
+      }
+      updateEstimate(14);
+      const last = state.values[state.values.length - 1];
+      $("pulseValue").textContent = Number.isFinite(last) ? last.toFixed(5) : "--";
+      state.busy = false;
+      setButtonsDisabled(false);
+      renderAll();
+    }
+
+    function clearEvidence() {
+      state.estimate.fill(0);
+      state.latestAdjoint.fill(0);
+      state.probes = [];
+      state.values = [];
+      state.basis = [];
+      $("pulseValue").textContent = "--";
+    }
+
+    function relativeMSE() {
+      let numerator = 0;
+      let denominator = 0;
+      for (let i = 0; i < WIDTH; i += 1) {
+        numerator += (state.secret[i] - state.estimate[i]) ** 2;
+        denominator += state.secret[i] ** 2;
+      }
+      return numerator / Math.max(denominator, 1e-15);
+    }
+
+    function color(value, limit) {
+      const normalized = Math.max(-1, Math.min(1, value / Math.max(limit, 1e-12)));
+      let r, g, b;
+      if (normalized < 0) {
+        const t = normalized + 1;
+        r = 33 + 208 * t;
+        g = 79 + 162 * t;
+        b = 151 + 90 * t;
+      } else {
+        const t = normalized;
+        r = 241;
+        g = 241 - 185 * t;
+        b = 241 - 180 * t;
+      }
+      return [Math.round(r), Math.round(g), Math.round(b)];
+    }
+
+    function drawField(canvas, field, fixedLimit = null) {
+      const context = canvas.getContext("2d", { alpha: false });
+      const offscreen = document.createElement("canvas");
+      offscreen.width = SIDE;
+      offscreen.height = SIDE;
+      const off = offscreen.getContext("2d", { alpha: false });
+      const pixels = off.createImageData(SIDE, SIDE);
+      let limit = fixedLimit || 0;
+      if (!fixedLimit) for (let i = 0; i < WIDTH; i += 1) limit = Math.max(limit, Math.abs(field[i]));
+      for (let i = 0; i < WIDTH; i += 1) {
+        const [r, g, b] = color(field[i], limit);
+        pixels.data[4 * i] = r;
+        pixels.data[4 * i + 1] = g;
+        pixels.data[4 * i + 2] = b;
+        pixels.data[4 * i + 3] = 255;
+      }
+      off.putImageData(pixels, 0, 0);
+      context.imageSmoothingEnabled = false;
+      context.drawImage(offscreen, 0, 0, canvas.width, canvas.height);
+    }
+
+    function drawPulseChart() {
+      const context = pulseChart.getContext("2d");
+      const width = pulseChart.width;
+      const height = pulseChart.height;
+      context.fillStyle = "#071019";
+      context.fillRect(0, 0, width, height);
+      context.strokeStyle = "#1d3346";
+      context.lineWidth = 1;
+      for (let i = 1; i < 4; i += 1) {
+        const y = (height * i) / 4;
+        context.beginPath(); context.moveTo(0, y); context.lineTo(width, y); context.stroke();
+      }
+      if (state.values.length < 2) return;
+      const values = state.values.slice(-220);
+      let min = Math.min(...values);
+      let max = Math.max(...values);
+      if (max - min < 1e-9) { min -= .5; max += .5; }
+      context.strokeStyle = "#59e1c2";
+      context.lineWidth = 2.5;
+      context.beginPath();
+      values.forEach((value, index) => {
+        const x = (index / Math.max(1, values.length - 1)) * width;
+        const y = height - 10 - ((value - min) / (max - min)) * (height - 20);
+        if (index === 0) context.moveTo(x, y); else context.lineTo(x, y);
+      });
+      context.stroke();
+      context.fillStyle = "#718399";
+      context.font = "18px ui-monospace, monospace";
+      context.fillText(max.toFixed(3), 8, 21);
+      context.fillText(min.toFixed(3), 8, height - 8);
+    }
+
+    function updateAddressUI() {
+      const scale = state.scale;
+      state.row = Math.max(0, Math.min(scale - 1, state.row));
+      state.col = Math.max(0, Math.min(scale - 1, state.col));
+      $("rowInput").max = String(scale - 1);
+      $("colInput").max = String(scale - 1);
+      $("rowInput").value = String(state.row);
+      $("colInput").value = String(state.col);
+      $("scaleLabel").textContent = `${scale} x ${scale}`;
+      $("addressLine").textContent = `a = (scale ${scale}, row ${state.row}, column ${state.col})`;
+      $("pixelCoordinate").textContent = `address ${state.row},${state.col}`;
+      const overlay = $("addressOverlay");
+      overlay.style.left = `${(100 * state.col) / scale}%`;
+      overlay.style.top = `${(100 * state.row) / scale}%`;
+      overlay.style.width = `${100 / scale}%`;
+      overlay.style.height = `${100 / scale}%`;
+    }
+
+    function updateMetrics() {
+      $("probeCount").textContent = String(state.probes.length);
+      $("rankValue").textContent = String(state.basis.length);
+      $("nullDimension").textContent = String(WIDTH - state.basis.length);
+      $("mseValue").textContent = relativeMSE().toFixed(3);
+      $("rankNote").textContent = state.probes.length === state.basis.length ? "every pulse added a direction" : `${state.probes.length - state.basis.length} redundant pulses`;
+
+      if (state.worldType === "nullpair" && state.twin && state.probes.length > 0) {
+        let maxDifference = 0;
+        for (const mask of state.probes) maxDifference = Math.max(maxDifference, Math.abs(dot(mask, state.secret) - dot(mask, state.twin)));
+        $("nullStatus").textContent = `Current maximum pulse difference between the two worlds: ${maxDifference.toExponential(3)}. Dyadic scales through 8 remain exactly blind; a non-dyadic or fine-enough lens can break the tie.`;
+      } else {
+        $("nullStatus").textContent = "Choose “Null-pair witness,” then run Dyadic 1 -> 8. Every recorded pulse is blind to the red-blue pixel checkerboard added to the twin.";
+      }
+    }
+
+    function renderAll() {
+      drawField(secretCanvas, state.revealed && state.twin && state.showTwin ? state.twin : state.secret);
+      drawField(beliefCanvas, state.estimate);
+      drawField(adjointCanvas, state.latestAdjoint);
+      drawPulseChart();
+      updateAddressUI();
+      updateMetrics();
+      $("worldLabel").textContent = `${state.worldType.replace("nullpair", "null pair")} / 1024 unknowns`;
+      $("secretOverlay").classList.toggle("open", state.revealed);
+      $("revealButton").textContent = state.revealed ? (state.twin ? (state.showTwin ? "Showing B" : "Showing A") : "Hide") : "Reveal";
+      $("revealButton").setAttribute("aria-pressed", String(state.revealed));
+    }
+
+    function setButtonsDisabled(disabled) {
+      for (const id of ["pulseButton", "scanButton", "dyadicButton", "coprimeButton", "newWorldButton", "resetButton"]) $(id).disabled = disabled;
+    }
+
+    $("scaleInput").addEventListener("input", (event) => {
+      state.scale = Number.parseInt(event.target.value, 10);
+      state.row = Math.min(state.row, state.scale - 1);
+      state.col = Math.min(state.col, state.scale - 1);
+      updateAddressUI();
+    });
+    $("rowInput").addEventListener("input", (event) => { state.row = Number.parseInt(event.target.value, 10) || 0; updateAddressUI(); });
+    $("colInput").addEventListener("input", (event) => { state.col = Number.parseInt(event.target.value, 10) || 0; updateAddressUI(); });
+    $("secretWrap").addEventListener("click", (event) => {
+      const rect = $("secretWrap").getBoundingClientRect();
+      state.col = Math.min(state.scale - 1, Math.floor(((event.clientX - rect.left) / rect.width) * state.scale));
+      state.row = Math.min(state.scale - 1, Math.floor(((event.clientY - rect.top) / rect.height) * state.scale));
+      updateAddressUI();
+    });
+    $("pulseButton").addEventListener("click", () => takePulse());
+    $("scanButton").addEventListener("click", () => {
+      if (state.scale > 16) {
+        $("rankNote").textContent = "batch scans stop at 16 x 16; single pulses remain available";
+        return;
+      }
+      scanScales([state.scale]);
+    });
+    $("dyadicButton").addEventListener("click", async () => { clearEvidence(); await scanScales([1, 2, 4, 8]); });
+    $("coprimeButton").addEventListener("click", async () => { clearEvidence(); await scanScales([7, 8]); });
+    $("resetButton").addEventListener("click", () => { clearEvidence(); renderAll(); });
+    $("newWorldButton").addEventListener("click", makeWorld);
+    $("worldType").addEventListener("change", makeWorld);
+    $("revealButton").addEventListener("click", () => {
+      if (state.twin) {
+        if (!state.revealed) {
+          state.revealed = true;
+          state.showTwin = false;
+        } else if (!state.showTwin) {
+          state.showTwin = true;
+        } else {
+          state.revealed = false;
+          state.showTwin = false;
+        }
+      } else {
+        state.revealed = !state.revealed;
+      }
+      renderAll();
+    });
+
+    makeWorld();
+  </script>
+</body>
+</html>

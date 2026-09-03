@@ -1,0 +1,63 @@
+# Results ledger
+
+All headline values below come from deterministic seed `24031976`. Full arrays and thresholds are in the JSON receipts.
+
+## Gate 0 - `LENS_ALGEBRA_EARNED_RANDOM_IMAGE_NULL_CONFIRMED`
+
+| measurement | result |
+|---|---:|
+| hidden dimensions | 1024 |
+| dyadic `[1,2,4,8,16]` rows / rank | 341 / 256 |
+| rank gain, complete 8 beside 16 | 0 |
+| rank gain, complete 15 beside 16 | 224 |
+| coarse `[1,2,4,8]` null dimension | 960 |
+| maximum pulse of exact null witness | 0.0 |
+| maximum difference between two secret pulse vectors | `1.110e-16` |
+| transpose/finite-difference relative error | `2.097e-10` |
+
+Random-image, rank-192 comparison:
+
+| design | unseen energy | condition number | noise excess |
+|---|---:|---:|---:|
+| pixel raster | 0.813239 | 1.000 | see JSON |
+| random orthonormal | 0.810720 | 1.000 | see JSON |
+| addressed box | 0.811538 | 1.64 | see JSON |
+
+The isotropic prediction is 0.812500.
+
+## Gate 1 - `ADDRESS_POLICY_HELPS_STRUCTURED_WORLDS_BUT_GLOBAL_ORACLE_WINS`
+
+Relative held-out MSE after 64 scalar measurements:
+
+| policy | MSE |
+|---|---:|
+| covariance-guided local lens | 0.101677 |
+| random addressed local lens | 0.125617 |
+| fixed fine pixels | 0.141497 |
+| random global masks | 0.124620 |
+| PCA global oracle | 0.043137 |
+
+The guided lens improved by 19.06% versus random local addresses and 28.14% versus fixed fine pixels. Seeds 1 through 5 all passed the original Gate-1 thresholds; their gains versus random address ranged from 17.29% to 32.05%.
+
+## Gate 2 - `ADDRESS_AND_PULSE_HISTORY_IDENTIFY_CONTROLLED_HIDDEN_LAW`
+
+Default-seed result after 12 pulses over 192 trials:
+
+| policy | exact law | direction | entropy bits |
+|---|---:|---:|---:|
+| fixed | 0.594 | 0.620 | 0.967 |
+| random | 0.776 | 0.859 | 0.743 |
+| active scale 8 | 1.000 | 1.000 | 0.000 |
+| active multiscale | 1.000 | 1.000 | 0.000 |
+
+Active multiscale address counts were concentrated at scales 2 and 16. Since active scale 8 also reached 1.000, this experiment does not establish that multiple scales are necessary.
+
+## Gate 2 robustness - `MECHANISM_REPLICATES_LOCKED_MARGIN_DOES_NOT`
+
+| seeds 1..10 | mean | minimum | maximum |
+|---|---:|---:|---:|
+| active exact accuracy | 1.000 | 1.000 | 1.000 |
+| random exact accuracy | 0.796 | 0.760 | 0.828 |
+| active minus random | 0.204 | 0.172 | 0.240 |
+
+The original complete gate passed 5/10 seeds because it demanded an active-minus-random margin of at least 0.20 on each run. The threshold remains unchanged.

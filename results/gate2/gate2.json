@@ -1,0 +1,642 @@
+{
+  "gate": 2,
+  "name": "hidden_rule_from_addressed_pulses",
+  "classification": "ADDRESS_AND_PULSE_HISTORY_IDENTIFY_CONTROLLED_HIDDEN_LAW",
+  "passed": true,
+  "seed": 24031976,
+  "image_side": 16,
+  "hypotheses": 64,
+  "laws": [
+    {
+      "direction": 0,
+      "speed": 0.014,
+      "diffusion": 0.00018,
+      "decay": 0.004
+    },
+    {
+      "direction": 0,
+      "speed": 0.014,
+      "diffusion": 0.00018,
+      "decay": 0.032
+    },
+    {
+      "direction": 0,
+      "speed": 0.014,
+      "diffusion": 0.00062,
+      "decay": 0.004
+    },
+    {
+      "direction": 0,
+      "speed": 0.014,
+      "diffusion": 0.00062,
+      "decay": 0.032
+    },
+    {
+      "direction": 0,
+      "speed": 0.024,
+      "diffusion": 0.00018,
+      "decay": 0.004
+    },
+    {
+      "direction": 0,
+      "speed": 0.024,
+      "diffusion": 0.00018,
+      "decay": 0.032
+    },
+    {
+      "direction": 0,
+      "speed": 0.024,
+      "diffusion": 0.00062,
+      "decay": 0.004
+    },
+    {
+      "direction": 0,
+      "speed": 0.024,
+      "diffusion": 0.00062,
+      "decay": 0.032
+    },
+    {
+      "direction": 1,
+      "speed": 0.014,
+      "diffusion": 0.00018,
+      "decay": 0.004
+    },
+    {
+      "direction": 1,
+      "speed": 0.014,
+      "diffusion": 0.00018,
+      "decay": 0.032
+    },
+    {
+      "direction": 1,
+      "speed": 0.014,
+      "diffusion": 0.00062,
+      "decay": 0.004
+    },
+    {
+      "direction": 1,
+      "speed": 0.014,
+      "diffusion": 0.00062,
+      "decay": 0.032
+    },
+    {
+      "direction": 1,
+      "speed": 0.024,
+      "diffusion": 0.00018,
+      "decay": 0.004
+    },
+    {
+      "direction": 1,
+      "speed": 0.024,
+      "diffusion": 0.00018,
+      "decay": 0.032
+    },
+    {
+      "direction": 1,
+      "speed": 0.024,
+      "diffusion": 0.00062,
+      "decay": 0.004
+    },
+    {
+      "direction": 1,
+      "speed": 0.024,
+      "diffusion": 0.00062,
+      "decay": 0.032
+    },
+    {
+      "direction": 2,
+      "speed": 0.014,
+      "diffusion": 0.00018,
+      "decay": 0.004
+    },
+    {
+      "direction": 2,
+      "speed": 0.014,
+      "diffusion": 0.00018,
+      "decay": 0.032
+    },
+    {
+      "direction": 2,
+      "speed": 0.014,
+      "diffusion": 0.00062,
+      "decay": 0.004
+    },
+    {
+      "direction": 2,
+      "speed": 0.014,
+      "diffusion": 0.00062,
+      "decay": 0.032
+    },
+    {
+      "direction": 2,
+      "speed": 0.024,
+      "diffusion": 0.00018,
+      "decay": 0.004
+    },
+    {
+      "direction": 2,
+      "speed": 0.024,
+      "diffusion": 0.00018,
+      "decay": 0.032
+    },
+    {
+      "direction": 2,
+      "speed": 0.024,
+      "diffusion": 0.00062,
+      "decay": 0.004
+    },
+    {
+      "direction": 2,
+      "speed": 0.024,
+      "diffusion": 0.00062,
+      "decay": 0.032
+    },
+    {
+      "direction": 3,
+      "speed": 0.014,
+      "diffusion": 0.00018,
+      "decay": 0.004
+    },
+    {
+      "direction": 3,
+      "speed": 0.014,
+      "diffusion": 0.00018,
+      "decay": 0.032
+    },
+    {
+      "direction": 3,
+      "speed": 0.014,
+      "diffusion": 0.00062,
+      "decay": 0.004
+    },
+    {
+      "direction": 3,
+      "speed": 0.014,
+      "diffusion": 0.00062,
+      "decay": 0.032
+    },
+    {
+      "direction": 3,
+      "speed": 0.024,
+      "diffusion": 0.00018,
+      "decay": 0.004
+    },
+    {
+      "direction": 3,
+      "speed": 0.024,
+      "diffusion": 0.00018,
+      "decay": 0.032
+    },
+    {
+      "direction": 3,
+      "speed": 0.024,
+      "diffusion": 0.00062,
+      "decay": 0.004
+    },
+    {
+      "direction": 3,
+      "speed": 0.024,
+      "diffusion": 0.00062,
+      "decay": 0.032
+    },
+    {
+      "direction": 4,
+      "speed": 0.014,
+      "diffusion": 0.00018,
+      "decay": 0.004
+    },
+    {
+      "direction": 4,
+      "speed": 0.014,
+      "diffusion": 0.00018,
+      "decay": 0.032
+    },
+    {
+      "direction": 4,
+      "speed": 0.014,
+      "diffusion": 0.00062,
+      "decay": 0.004
+    },
+    {
+      "direction": 4,
+      "speed": 0.014,
+      "diffusion": 0.00062,
+      "decay": 0.032
+    },
+    {
+      "direction": 4,
+      "speed": 0.024,
+      "diffusion": 0.00018,
+      "decay": 0.004
+    },
+    {
+      "direction": 4,
+      "speed": 0.024,
+      "diffusion": 0.00018,
+      "decay": 0.032
+    },
+    {
+      "direction": 4,
+      "speed": 0.024,
+      "diffusion": 0.00062,
+      "decay": 0.004
+    },
+    {
+      "direction": 4,
+      "speed": 0.024,
+      "diffusion": 0.00062,
+      "decay": 0.032
+    },
+    {
+      "direction": 5,
+      "speed": 0.014,
+      "diffusion": 0.00018,
+      "decay": 0.004
+    },
+    {
+      "direction": 5,
+      "speed": 0.014,
+      "diffusion": 0.00018,
+      "decay": 0.032
+    },
+    {
+      "direction": 5,
+      "speed": 0.014,
+      "diffusion": 0.00062,
+      "decay": 0.004
+    },
+    {
+      "direction": 5,
+      "speed": 0.014,
+      "diffusion": 0.00062,
+      "decay": 0.032
+    },
+    {
+      "direction": 5,
+      "speed": 0.024,
+      "diffusion": 0.00018,
+      "decay": 0.004
+    },
+    {
+      "direction": 5,
+      "speed": 0.024,
+      "diffusion": 0.00018,
+      "decay": 0.032
+    },
+    {
+      "direction": 5,
+      "speed": 0.024,
+      "diffusion": 0.00062,
+      "decay": 0.004
+    },
+    {
+      "direction": 5,
+      "speed": 0.024,
+      "diffusion": 0.00062,
+      "decay": 0.032
+    },
+    {
+      "direction": 6,
+      "speed": 0.014,
+      "diffusion": 0.00018,
+      "decay": 0.004
+    },
+    {
+      "direction": 6,
+      "speed": 0.014,
+      "diffusion": 0.00018,
+      "decay": 0.032
+    },
+    {
+      "direction": 6,
+      "speed": 0.014,
+      "diffusion": 0.00062,
+      "decay": 0.004
+    },
+    {
+      "direction": 6,
+      "speed": 0.014,
+      "diffusion": 0.00062,
+      "decay": 0.032
+    },
+    {
+      "direction": 6,
+      "speed": 0.024,
+      "diffusion": 0.00018,
+      "decay": 0.004
+    },
+    {
+      "direction": 6,
+      "speed": 0.024,
+      "diffusion": 0.00018,
+      "decay": 0.032
+    },
+    {
+      "direction": 6,
+      "speed": 0.024,
+      "diffusion": 0.00062,
+      "decay": 0.004
+    },
+    {
+      "direction": 6,
+      "speed": 0.024,
+      "diffusion": 0.00062,
+      "decay": 0.032
+    },
+    {
+      "direction": 7,
+      "speed": 0.014,
+      "diffusion": 0.00018,
+      "decay": 0.004
+    },
+    {
+      "direction": 7,
+      "speed": 0.014,
+      "diffusion": 0.00018,
+      "decay": 0.032
+    },
+    {
+      "direction": 7,
+      "speed": 0.014,
+      "diffusion": 0.00062,
+      "decay": 0.004
+    },
+    {
+      "direction": 7,
+      "speed": 0.014,
+      "diffusion": 0.00062,
+      "decay": 0.032
+    },
+    {
+      "direction": 7,
+      "speed": 0.024,
+      "diffusion": 0.00018,
+      "decay": 0.004
+    },
+    {
+      "direction": 7,
+      "speed": 0.024,
+      "diffusion": 0.00018,
+      "decay": 0.032
+    },
+    {
+      "direction": 7,
+      "speed": 0.024,
+      "diffusion": 0.00062,
+      "decay": 0.004
+    },
+    {
+      "direction": 7,
+      "speed": 0.024,
+      "diffusion": 0.00062,
+      "decay": 0.032
+    }
+  ],
+  "trials": 192,
+  "steps": 12,
+  "noise_sigma": 0.012,
+  "candidate_scales": [
+    2,
+    3,
+    4,
+    5,
+    7,
+    8,
+    11,
+    16
+  ],
+  "candidate_addresses": 544,
+  "policies": {
+    "fixed": {
+      "exact_accuracy_curve": [
+        0.203125,
+        0.359375,
+        0.46875,
+        0.5416666666666666,
+        0.609375,
+        0.6145833333333334,
+        0.5833333333333334,
+        0.5989583333333334,
+        0.6145833333333334,
+        0.59375,
+        0.5989583333333334,
+        0.59375
+      ],
+      "direction_accuracy_curve": [
+        0.3645833333333333,
+        0.5,
+        0.5677083333333334,
+        0.59375,
+        0.6510416666666666,
+        0.6458333333333334,
+        0.6145833333333334,
+        0.625,
+        0.640625,
+        0.6197916666666666,
+        0.625,
+        0.6197916666666666
+      ],
+      "entropy_bits_curve": [
+        3.095600706202346,
+        2.045999312806501,
+        1.4348633106942783,
+        1.2093244681046607,
+        1.1029959502766686,
+        1.0772903977844615,
+        1.0459766780931607,
+        1.0295803978224203,
+        0.9927453558803361,
+        0.9806790818415297,
+        0.9696510730050227,
+        0.9673751697842342
+      ],
+      "final_exact_accuracy": 0.59375,
+      "final_direction_accuracy": 0.6197916666666666,
+      "final_speed_accuracy": 0.9739583333333334,
+      "final_diffusion_accuracy": 0.9739583333333334,
+      "final_decay_accuracy": 0.953125,
+      "final_entropy_bits": 0.9673751697842342,
+      "chosen_scale_counts": {
+        "8": 2304
+      }
+    },
+    "random": {
+      "exact_accuracy_curve": [
+        0.0625,
+        0.08854166666666667,
+        0.10416666666666667,
+        0.16666666666666666,
+        0.265625,
+        0.3645833333333333,
+        0.484375,
+        0.546875,
+        0.5885416666666666,
+        0.6614583333333334,
+        0.7291666666666666,
+        0.7760416666666666
+      ],
+      "direction_accuracy_curve": [
+        0.15104166666666666,
+        0.18229166666666666,
+        0.234375,
+        0.2916666666666667,
+        0.4010416666666667,
+        0.5208333333333334,
+        0.6354166666666666,
+        0.6979166666666666,
+        0.7239583333333334,
+        0.7864583333333334,
+        0.828125,
+        0.859375
+      ],
+      "entropy_bits_curve": [
+        5.757344931124229,
+        5.305054777357072,
+        4.903311599269266,
+        4.3083833604274275,
+        3.7120802417361305,
+        3.0278697303153606,
+        2.433911262710129,
+        1.9574435954788563,
+        1.6237270412027787,
+        1.3014765784380136,
+        1.0071829680472077,
+        0.742914231880988
+      ],
+      "final_exact_accuracy": 0.7760416666666666,
+      "final_direction_accuracy": 0.859375,
+      "final_speed_accuracy": 0.921875,
+      "final_diffusion_accuracy": 0.9375,
+      "final_decay_accuracy": 0.8541666666666666,
+      "final_entropy_bits": 0.742914231880988,
+      "chosen_scale_counts": {
+        "2": 20,
+        "3": 45,
+        "4": 84,
+        "5": 102,
+        "7": 230,
+        "8": 281,
+        "11": 519,
+        "16": 1023
+      }
+    },
+    "active_scale8": {
+      "exact_accuracy_curve": [
+        0.18229166666666666,
+        0.7239583333333334,
+        0.9583333333333334,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "direction_accuracy_curve": [
+        0.34375,
+        0.8958333333333334,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "entropy_bits_curve": [
+        3.09968273260413,
+        0.7576086831892365,
+        0.08916509580523706,
+        0.0005880447867509026,
+        3.2441480635318553e-06,
+        1.5545966523665702e-15,
+        5.585029060448651e-16,
+        6.722808759517432e-16,
+        3.787924642483575e-16,
+        3.5614337504777937e-16,
+        2.608092323918599e-16,
+        2.4807867570812747e-16
+      ],
+      "final_exact_accuracy": 1.0,
+      "final_direction_accuracy": 1.0,
+      "final_speed_accuracy": 1.0,
+      "final_diffusion_accuracy": 1.0,
+      "final_decay_accuracy": 1.0,
+      "final_entropy_bits": 2.4807867570812747e-16,
+      "chosen_scale_counts": {
+        "8": 2304
+      }
+    },
+    "active_multiscale": {
+      "exact_accuracy_curve": [
+        0.2708333333333333,
+        0.8072916666666666,
+        0.9791666666666666,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "direction_accuracy_curve": [
+        0.4479166666666667,
+        0.953125,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "entropy_bits_curve": [
+        2.8607280958633794,
+        0.571221332185753,
+        0.03693360919310754,
+        1.1041003772277857e-07,
+        2.9082283477362127e-16,
+        5.943898689034429e-17,
+        3.948366081324256e-17,
+        3.5358541399852184e-17,
+        2.988537226446427e-17,
+        2.7631397236282816e-17,
+        2.732086925204867e-17,
+        2.6907546981898468e-17
+      ],
+      "final_exact_accuracy": 1.0,
+      "final_direction_accuracy": 1.0,
+      "final_speed_accuracy": 1.0,
+      "final_diffusion_accuracy": 1.0,
+      "final_decay_accuracy": 1.0,
+      "final_entropy_bits": 2.6907546981898468e-17,
+      "chosen_scale_counts": {
+        "2": 1081,
+        "7": 2,
+        "8": 17,
+        "11": 22,
+        "16": 1182
+      }
+    }
+  },
+  "locked_requirements": {
+    "active_exact_accuracy_ge_0_90": true,
+    "active_beats_random_by_0_20": true,
+    "active_beats_fixed_by_0_40": true,
+    "active_entropy_below_0_5_bits": true,
+    "multiscale_not_worse_than_active_scale8": true
+  },
+  "scope": "The initial field and 64-member law family are known. Only the law identity is hidden. One noisy scalar is observed per time step."
+}
