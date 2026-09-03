@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Geometric Neuron V24 — READ + WRITE</title>
+<style>
+:root{color-scheme:dark;--bg:#071019;--panel:#0e1b28;--line:#294056;--ink:#edf3fa;--muted:#92a4b7;--teal:#59e1c2;--amber:#ffbb55;--red:#ff747b;--blue:#72aaff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 18% 0,#123249 0,transparent 32rem),#071019;color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}
+main{width:min(1180px,calc(100% - 24px));margin:auto;padding:22px 0 60px}a{color:#9ed5ff}.top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:16px}.top h1{margin:0;font-size:clamp(1.55rem,3vw,2.4rem)}.sub{color:var(--muted);max-width:650px}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.grid{display:grid;grid-template-columns:1.05fr 1fr;gap:12px}.panel{background:linear-gradient(180deg,#102132,#0a1722);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 20px 70px #0005}.head{padding:12px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}.head h2{margin:0;font-size:1rem}.eyebrow{font:700 .7rem/1.2 ui-monospace,monospace;color:#6f8297;letter-spacing:.12em;text-transform:uppercase}.body{padding:14px}.world{display:grid;grid-template-columns:1fr 1fr;gap:12px}.canvasbox{position:relative;aspect-ratio:1;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#03080d}.canvasbox canvas{width:100%;height:100%;display:block;image-rendering:pixelated}.veil{position:absolute;inset:0;display:grid;place-items:center;background:#071019e8;color:#a9b6c5;font:700 .75rem ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;pointer-events:none}.veil.off{display:none}.overlay{position:absolute;border:2px solid var(--amber);background:#ffbb5520;pointer-events:none}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}button,select,input{font:inherit;color:var(--ink);background:#10202f;border:1px solid var(--line);border-radius:9px;min-height:42px;padding:.55rem .7rem}button{cursor:pointer;font-weight:700}button:hover{border-color:#55728c}button.primary{background:var(--teal);color:#04130f;border-color:var(--teal)}button.warn{background:var(--amber);color:#201403;border-color:var(--amber)}button.red{border-color:#7a3d45;color:#ffafb3}.wide{grid-column:1/-1}
+.readout{margin-top:12px;padding:13px;border:1px solid var(--line);border-radius:10px;background:#07131d}.pulse{font:800 2rem ui-monospace,monospace;color:var(--amber)}.small{color:var(--muted);font-size:.8rem}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.metric{background:#091520;border:1px solid var(--line);border-radius:9px;padding:9px}.metric span{display:block;color:#708299;font:700 .65rem ui-monospace,monospace;text-transform:uppercase}.metric strong{display:block;margin-top:4px;font:800 1.05rem ui-monospace,monospace}
+.cards{display:grid;gap:10px}.card{padding:14px;border:1px solid var(--line);border-radius:11px;background:#0a1722}.card h3{margin:0 0 5px;font-size:.95rem}.card p{margin:.35rem 0;color:#b7c3cf}.pass{color:var(--teal)}.null{color:var(--red)}.eq{padding:12px;border-left:3px solid var(--teal);background:#07131d;font: .9rem/1.6 ui-monospace,monospace;margin:12px 0}
+.status{min-height:84px}.status strong{color:var(--teal)}.legend{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:.78rem}.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}.foot{margin-top:14px;padding:14px;border:1px solid var(--line);border-radius:12px;background:#0a1722;color:#b9c5d1}
+@media(max-width:800px){.grid,.world{grid-template-columns:1fr}.top{display:block}.metrics{grid-template-columns:1fr}.controls{grid-template-columns:1fr}.wide{grid-column:auto}}
+</style>
+</head>
+<body><main>
+<div class="top"><div><div class="eyebrow">Geometric Neuron V24 / Gate 3</div><h1>READ + WRITE</h1><p class="sub">One narrow scalar readout. A spatial address. A write can either excite the hidden operator or change it. Those are different experiments.</p></div><p class="small"><a href="./">← Addressable Lens</a> · <a href="https://github.com/anttiluode/GeometricNeuronV24">source + receipts</a></p></div>
+
+<div class="grid">
+<section class="panel"><div class="head"><div><div class="eyebrow">interactive mechanism sketch</div><h2>Hidden operator + addressed field</h2></div><button id="reveal">Reveal law</button></div>
+<div class="body">
+<div class="world">
+<div><div class="canvasbox" id="fieldWrap"><canvas id="field" width="320" height="320"></canvas><div id="box" class="overlay"></div></div><div class="small">fast state x(t)</div></div>
+<div><div class="canvasbox"><canvas id="operator" width="320" height="320"></canvas><div id="opVeil" class="veil">operator hidden</div></div><div class="small">persistent local operator state</div></div>
+</div>
+<div class="controls">
+<label class="small">Read scale
+<select id="scale"><option>2</option><option>4</option><option selected>8</option><option>16</option></select></label>
+<label class="small">Hidden transport
+<select id="law"><option value="random">random on reset</option><option value="east">east</option><option value="south">south</option><option value="west">west</option><option value="north">north</option></select></label>
+<button id="read" class="primary wide">READ pulse at yellow address</button>
+<button id="uniform">Uniform state write</button><button id="local" class="warn">Localized state write</button>
+<button id="step">Step hidden dynamics</button><button id="erase">Erase fast state</button>
+<button id="struct" class="red wide">Persistent operator write at address</button>
+<button id="diagnostic" class="wide">Load common diagnostic field</button>
+<button id="reset" class="wide">Reset hidden world</button>
+</div>
+<div class="readout"><div class="eyebrow">scalar detector</div><div id="pulse" class="pulse">--</div><div id="address" class="small mono">a=(8,0,0)</div></div>
+<div class="metrics"><div class="metric"><span>reads</span><strong id="reads">0</strong></div><div class="metric"><span>state writes</span><strong id="sw">0</strong></div><div class="metric"><span>operator writes</span><strong id="ow">0</strong></div></div>
+</div></section>
+
+<aside class="cards">
+<div class="card status"><div class="eyebrow">what happened?</div><h3 id="statusTitle">Start blind</h3><p id="status">With x=0, every transport law gives exactly the same pulse: zero. Try READ, then compare a uniform state write with a localized one.</p></div>
+<div class="card"><div class="eyebrow">Gate 3A / state write</div><h3><span class="pass">Perturb to reveal</span>, do not modify</h3><div class="eq">x(t+1)=Gθ x(t)<br>write: x ← x + w<br>θ unchanged</div><p>An equal-energy uniform write remains an exact null. A localized write excites spatial structure, so hidden transport direction changes later addressed pulses.</p></div>
+<div class="card"><div class="eyebrow">Gate 3B / operator write</div><h3><span class="pass">Modify, erase, then diagnose</span></h3><div class="eq">θ ← θ + Δθ(address)<br>x ← 0<br>x ← public diagnostic load<br>later y = hᵀx</div><p>The persistent write lives in the operator map. Erasing the fast field does not erase it. Reload the common diagnostic field and later pulses still depend on where the operator changed.</p></div>
+<div class="card"><div class="eyebrow">standing null</div><h3 class="null">A pulse is not the hidden world</h3><p>The browser is a mechanism sketch. The locked Python gate is the receipt: 3A active 1.000 vs random 0.355; 3B noise-aware 1.000 vs raw variance 0.367 and random 0.480; both halves pass 10/10 robustness seeds.</p></div>
+</aside>
+</div>
+
+<div class="foot"><strong>Neuron boundary.</strong> A diagnostic state write can be compared to targeted dendritic stimulation; a persistent operator write can be compared to lasting local synaptic/channel/geometry change. This page does not claim a neuron has this address bus, and a backpropagating spike is not being called an adjoint. The next real bridge is to ask these observability questions on the compiled human neuron 1125.</div>
+</main>
+<script>
+"use strict";
+const N=16,W=N*N; let rngSeed=24;
+const state={x:new Float64Array(W),ret:new Float64Array(W),law:"east",scale:8,row:0,col:0,reads:0,sw:0,ow:0,reveal:false};
+const $=id=>document.getElementById(id);
+function rng(){rngSeed=(rngSeed*1664525+1013904223)>>>0;return rngSeed/4294967296}
+function idx(y,x){return ((y+N)%N)*N+((x+N)%N)}
+function reset(){
+ state.x.fill(0);state.ret.fill(.65);state.reads=state.sw=state.ow=0;rngSeed=(Date.now()>>>0)||24;
+ const sel=$("law").value; state.law=sel==="random"?["east","south","west","north"][Math.floor(rng()*4)]:sel;
+ setStatus("Start blind","Fast state is zero. All four hidden transport laws are read-identical until an informative write excites them.");
+ render();
+}
+function shift(){
+ const out=new Float64Array(W);let dy=0,dx=0;if(state.law==="east")dx=1;if(state.law==="west")dx=-1;if(state.law==="south")dy=1;if(state.law==="north")dy=-1;
+ for(let y=0;y<N;y++)for(let x=0;x<N;x++)out[idx(y+dy,x+dx)]=state.x[idx(y,x)];
+ const next=new Float64Array(W);
+ for(let y=0;y<N;y++)for(let x=0;x<N;x++){const i=idx(y,x);const lap=out[idx(y-1,x)]+out[idx(y+1,x)]+out[idx(y,x-1)]+out[idx(y,x+1)]-4*out[i];next[i]=(out[i]+.08*lap)*state.ret[i]/.65}
+ state.x=next;render();
+}
+function bounds(){const s=state.scale;return {y0:state.row/s,y1:(state.row+1)/s,x0:state.col/s,x1:(state.col+1)/s}}
+function read(){
+ const b=bounds();let sum=0,area=0;
+ for(let y=0;y<N;y++)for(let x=0;x<N;x++){const yl=y/N,yr=(y+1)/N,xl=x/N,xr=(x+1)/N;const oy=Math.max(0,Math.min(b.y1,yr)-Math.max(b.y0,yl));const ox=Math.max(0,Math.min(b.x1,xr)-Math.max(b.x0,xl));const a=oy*ox;if(a){sum+=state.x[idx(y,x)]*a;area+=a}}
+ const v=sum/Math.max(area,1e-12);state.reads++;$("pulse").textContent=v.toFixed(6);setStatus("Addressed pulse",`Read ${state.reads}: y=${v.toFixed(6)} at scale ${state.scale}, row ${state.row}, col ${state.col}. The address is part of the evidence.`);render();return v;
+}
+function uniform(){state.x.fill(1/N);state.sw++;setStatus("Uniform state write","The write has unit L2 energy, but every periodic transport law preserves a uniform field. In the locked Gate 3A this remains an exact ambiguity.");render()}
+function local(){
+ state.x.fill(0);const y=Math.min(N-1,Math.floor((state.row+.5)*N/state.scale));const x=Math.min(N-1,Math.floor((state.col+.5)*N/state.scale));state.x[idx(y,x)]=1;state.sw++;setStatus("Localized state write","Same unit L2 energy, different spatial structure. Step the hidden dynamics, then move/read the lens: transport direction can now leave an addressed signature.");render()
+}
+function structural(){
+ const b=bounds();for(let y=0;y<N;y++)for(let x=0;x<N;x++){const cy=(y+.5)/N,cx=(x+.5)/N;if(cy>=b.y0&&cy<b.y1&&cx>=b.x0&&cx<b.x1)state.ret[idx(y,x)]=1.05}
+ state.ow++;setStatus("Persistent operator write","Local retention changed. This is not merely a transient x. Press 'Erase fast state', then load the common diagnostic field and step: the changed operator survives.");render()
+}
+function diagnostic(){state.x.fill(1/N);setStatus("Common diagnostic loaded","Every hidden world receives the same fast state. Any subsequent difference caused by the retention patch is therefore in the operator, not leftover fast activity.");render()}
+function erase(){state.x.fill(0);setStatus("Fast state erased","x is now zero. The persistent operator map remains. Gate 3B's key test starts from this separation.");render()}
+function setStatus(t,p){$("statusTitle").textContent=t;$("status").textContent=p}
+function color(v,limit){const z=Math.max(-1,Math.min(1,v/Math.max(limit,1e-9)));if(z<0){const q=z+1;return [35+205*q,78+160*q,150+90*q]}return [240,240-180*z,240-175*z]}
+function draw(canvas,a,baseline=0){const c=canvas.getContext("2d"),off=document.createElement("canvas");off.width=off.height=N;const o=off.getContext("2d"),im=o.createImageData(N,N);let lim=0;for(let i=0;i<W;i++)lim=Math.max(lim,Math.abs(a[i]-baseline));for(let i=0;i<W;i++){const [r,g,b]=color(a[i]-baseline,lim);im.data[4*i]=r;im.data[4*i+1]=g;im.data[4*i+2]=b;im.data[4*i+3]=255}o.putImageData(im,0,0);c.imageSmoothingEnabled=false;c.drawImage(off,0,0,canvas.width,canvas.height)}
+function render(){
+ draw($("field"),state.x,0);draw($("operator"),state.ret,.65);$("opVeil").classList.toggle("off",state.reveal);$("reads").textContent=state.reads;$("sw").textContent=state.sw;$("ow").textContent=state.ow;
+ $("address").textContent=`a=(${state.scale},${state.row},${state.col})`;const b=$("box");b.style.left=`${100*state.col/state.scale}%`;b.style.top=`${100*state.row/state.scale}%`;b.style.width=b.style.height=`${100/state.scale}%`;
+}
+$("fieldWrap").onclick=e=>{const r=e.currentTarget.getBoundingClientRect();state.col=Math.min(state.scale-1,Math.floor((e.clientX-r.left)/r.width*state.scale));state.row=Math.min(state.scale-1,Math.floor((e.clientY-r.top)/r.height*state.scale));render()};
+$("scale").onchange=e=>{state.scale=+e.target.value;state.row=Math.min(state.row,state.scale-1);state.col=Math.min(state.col,state.scale-1);render()};
+$("law").onchange=reset;$("read").onclick=read;$("uniform").onclick=uniform;$("local").onclick=local;$("step").onclick=shift;$("erase").onclick=erase;$("struct").onclick=structural;$("diagnostic").onclick=diagnostic;$("reset").onclick=reset;$("reveal").onclick=()=>{state.reveal=!state.reveal;$("reveal").textContent=state.reveal?`Law: ${state.law}`:"Reveal law";render()};
+reset();
+</script></body></html>
