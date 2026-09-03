@@ -26,27 +26,33 @@
     },
     "active_point_only": {
       "numerical_rank": 12,
-      "smallest_singular_mV": 5.9495e-05,
+      "smallest_singular_mV": 0.000059495,
       "noise_visible_rank": 7,
       "identity_accuracy": 0.761
     },
     "active_multiscale": {
       "numerical_rank": 12,
-      "smallest_singular_mV": 6.3980e-05,
+      "smallest_singular_mV": 0.00006398,
       "noise_visible_rank": 7,
       "identity_accuracy": 0.779,
-      "selected_scale_counts": {"0.0": 3, "35.0": 2, "110.0": 7}
+      "selected_scale_counts": {
+        "0.0": 3,
+        "35.0": 2,
+        "110.0": 7
+      }
     },
     "random_multiscale": {
-      "median_numerical_rank": 9.0,
+      "median_numerical_rank": 9,
       "median_smallest_singular_mV": 1.1154e-19,
-      "median_noise_visible_rank": 4.0
+      "median_noise_visible_rank": 4
     }
   },
   "finite_difference_relative_error": 0.0002,
   "radius_flattened_attacker": {
     "numerical_rank": 12,
-    "smallest_singular_mV": 0.00013080
+    "smallest_singular_mV": 0.0001308
   },
-  "note": "The preregistered >=0.90 identity criterion at 1 uV RMS soma noise failed and was not lowered."
+  "note": "The preregistered >=0.90 identity criterion at 1 uV RMS soma noise failed and was not lowered.",
+  "published_to_main": true,
+  "branch_head": "49f32c920a066fbe5c5545902884bb8c7c391b08"
 }
