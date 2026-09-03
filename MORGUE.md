@@ -88,3 +88,28 @@ selective rescue.
 This does not kill dendritic NMDA computation. It kills the narrower attempted
 use of that nonlinearity as a central soma-observability rescue in this assay.
 
+
+
+### “Raw predictive variance is enough to discover coarse-to-fine sensing”
+
+Killed by Gate 6.
+
+With equal detector noise, raw predictive variance chose high-amplitude fine
+4x4 questions and required 4.375 probes per anomaly onset — exactly the
+fine-only cost. Merely offering multiple scales did nothing.
+
+The post-result expected-information selector did use the hierarchy, but that
+is a different policy and is recorded separately as Gate 6B.
+
+### “A successful read is memory even if it does not change future state”
+
+Killed by the Gate-6 no-write attacker.
+
+The no-write observer localized the same anomalies with the same active search,
+but because the result did not persist in the predicted spatial field it paid
+280 probes instead of 42 and reopened paid search on 56 continuing-anomaly
+steps instead of zero.
+
+For this architecture, memory earns its name only when the write changes the
+next prediction and therefore the next sensing action.
+
