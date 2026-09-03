@@ -31,3 +31,5 @@ jobs:
         run: python experiments/gate3_robustness.py
       - name: Gate 4 - real cell 1125 soma observability
         run: python experiments/gate4_cell1125_observability.py
+      - name: Gate 4 robustness and noise boundary
+        run: python experiments/gate4_robustness.py
