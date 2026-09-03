@@ -585,7 +585,9 @@ def main() -> None:
             repeat_ratio <= MAX_REPEAT_PAID_RATIO
         ),
         "erase_verification_reliable": (
-            write["erase_success"]["mean"] >= CYCLES - 0.05
+            # The locked schedule ends during the eighth ON block, so only
+            # seven disappearance transitions actually occur.
+            write["erase_success"]["mean"] >= (CYCLES - 1) - 0.05
         ),
     }
     passed = all(locked_requirements.values())
