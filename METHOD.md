@@ -178,3 +178,31 @@ Physical lens outputs are area averages. Rank is invariant to nonzero row scalin
 - A software transpose is not a same-device physical adjoint.
 - Identifying one member of a known finite table is not discovering an arbitrary dynamical law.
 - An image-space laboratory is not evidence about biological neurons.
+
+
+## Gate 6 - PerceptionLab persistent spatial memory
+
+World: a 32x32 structured field with known toroidal +1-pixel x transport per
+step. Eight supplied 4x4 anomaly prototypes can appear. The schedule uses eight
+cycles of 4 OFF steps followed by 8 ON steps.
+
+The observer gets a free whole-field HOME average with Gaussian noise sigma
+0.001. Paid square lenses use scales 16, 8 and 4 with noise sigma 0.002.
+
+A HOME residual above 0.004 opens a local search. The original Gate-6 active
+selector maximizes predictive scalar variance. Once a prototype posterior
+exceeds 0.995, write-capable policies insert the recognized prototype into the
+predicted spatial field. That field is transported on the next step.
+
+The primary attacker is identical except the write is erased.
+
+Locked comparisons include prediction MSE, paid-probe count, repeated paid
+looks during a continuing anomaly, localization accuracy, and a multiscale
+onset-cost requirement versus fine-only search.
+
+The multiscale requirement failed and remains failed.
+
+Gate 6B was introduced only afterward. It numerically integrates expected
+Bayesian information gain for each candidate noisy lens and chooses the lens
+with maximal mutual information about prototype identity. Gate 6B is a
+post-result policy audit, not a replacement preregistration.
