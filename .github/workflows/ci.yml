@@ -35,3 +35,5 @@ jobs:
         run: python experiments/gate4_robustness.py
       - name: Gate 5 - NMDA observability bridge
         run: python experiments/gate5_nmda_observability.py
+      - name: Gate 6 - PerceptionLab persistent memory
+        run: python experiments/gate6_perceptionlab_memory.py
