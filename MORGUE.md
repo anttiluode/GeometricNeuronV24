@@ -22,7 +22,20 @@ No. Active scale 8 and active multiscale both achieved 100% on the controlled 64
 
 No. The exact active result replicated 10/10, but the originally locked active-minus-random margin was below 0.20 on five seeds. The threshold is not revised after seeing this.
 
-## Earlier kills carried forward
+
+
+### “Any write reveals hidden dynamics”
+
+No. Gate 3A's equal-energy uniform write is an exact null for all four transport laws. The useful write is localized because it excites spatial structure on which the laws act differently.
+
+### “Active means probe the largest predicted signal difference”
+
+No. Gate 3B deliberately makes fine probes noisy. Raw predictive-variance selection averages 0.411 exact accuracy across the robustness seeds, slightly below random at 0.432. A noise-aware separation criterion reaches 1.000.
+
+### “A diagnostic write and a structural write are the same thing”
+
+No. Gate 3A changes only fast state and leaves the operator fixed. Gate 3B changes a local operator parameter; its signature survives erasure of the fast field and write log. Keeping these separate is now a standing obligation.
+\n## Earlier kills carried forward
 
 - The original ECG graph remains V21's quantized aliasing map plus variance thermostat, not a lag/skew operator.
 - Phase-as-memory without unknown-address retrieval remains killed by V21's no-probe/wrong-probe null.
