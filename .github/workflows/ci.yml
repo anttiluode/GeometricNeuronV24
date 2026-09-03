@@ -29,3 +29,5 @@ jobs:
         run: python experiments/gate3_read_write.py
       - name: Gate 3 robustness audit
         run: python experiments/gate3_robustness.py
+      - name: Gate 4 - real cell 1125 soma observability
+        run: python experiments/gate4_cell1125_observability.py
