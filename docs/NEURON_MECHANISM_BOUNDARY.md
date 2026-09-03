@@ -110,3 +110,32 @@ Gate 3 does **not** establish:
 - that the V24 image lattice is a neuron model.
 
 The next claim should be earned on the real morphology.
+
+
+## Gate 4 result: the real tree opens, then the soma bottleneck appears
+
+Gate 4 now performs the first version of that assay on the pinned cell-1125
+morphology, using a passive morphology-graph cable and twelve possible local
+10% leak-density changes.
+
+The fixed-address family has numerical rank **2/12**. Active addressed
+stimulation reaches **12/12**.
+
+That is the positive part.
+
+The locked soma-noise test is the boundary: at **1 uV RMS** only **7/12**
+singular directions clear the one-sigma ruler and exact hidden-section identity
+is about **0.778**. The original >=0.90 target passed **0/10** new noise seeds.
+
+So the biological translation becomes more precise:
+
+> Moving the stimulation address can remove an algebraic ambiguity without
+> making the soma a high-fidelity monitor of all dendritic parameters.
+
+This is compatible with a branch-local-state + global-consequence architecture:
+local branches need not infer themselves from the soma. A global somatic signal
+may carry useful consequence information while remaining insufficient for
+central reconstruction of the complete dendritic state.
+
+That is still a model-level constraint, not evidence that a neuron actively
+runs this identification procedure.
