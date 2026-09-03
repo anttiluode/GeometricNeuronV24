@@ -33,3 +33,5 @@ jobs:
         run: python experiments/gate4_cell1125_observability.py
       - name: Gate 4 robustness and noise boundary
         run: python experiments/gate4_robustness.py
+      - name: Gate 5 - NMDA observability bridge
+        run: python experiments/gate5_nmda_observability.py
