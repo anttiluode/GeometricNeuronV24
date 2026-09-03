@@ -1,0 +1,21 @@
+{
+  "gate": "6B",
+  "summary_type": "ci_summary",
+  "source_run_id": 33727647936,
+  "classification": "INFORMATION_GAIN_UNLOCKS_COARSE_TO_FINE_SEARCH_POSTHOC",
+  "post_result": true,
+  "policies": {
+    "raw_predictive_variance_multiscale_onset_probes": 4.375,
+    "fine_only_onset_probes": 4.375,
+    "expected_information_multiscale_onset_probes": 3.0
+  },
+  "comparisons": {
+    "information_vs_fine_ratio": 0.686,
+    "information_vs_raw_variance_ratio": 0.686
+  },
+  "localization_accuracy": 1.0,
+  "top_scale_sequence": "16-8-4",
+  "top_scale_sequence_count": 160,
+  "top_scale_sequence_total": 160,
+  "note": "Expected-information selection was introduced only after Gate 6 showed that raw predictive variance did not exploit scale."
+}
