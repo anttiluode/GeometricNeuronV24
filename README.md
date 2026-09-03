@@ -206,6 +206,49 @@ See [Gate 4's full boundary](docs/GATE4_NEURON_OBSERVABILITY.md),
 [the experiment](experiments/gate4_cell1125_observability.py), and
 [the post-result audit](experiments/gate4_robustness.py).
 
+## Gate 5 - HUMAN NMDA does not rescue the soma bottleneck
+
+Gate 5 froze the exact 12 probe addresses chosen by Gate 4 and changed only
+the local input law.
+
+```text
+condition             rank   visible @1uV   s_min (mV)     identity
+
+PASSIVE_CURRENT       12/12      7/12       6.3980e-05      0.776
+AMPA_ONLY             12/12      7/12       5.2641e-05      0.713
+FROZEN_NMDA           12/12      7/12       5.2641e-05      0.713
+HUMAN_NMDA            12/12      7/12       5.4218e-05      0.724
+```
+
+The HUMAN magnesium feedback adds only **+0.011** exact identity over the
+rest-matched frozen-block control and does not add a single noise-visible
+direction.
+
+More importantly, it is not selectively rescuing the five weak Gate-4
+directions:
+
+```text
+median weak-direction gain HUMAN/frozen     1.030x
+median strong-direction gain                1.036x
+weak / strong selectivity                   0.994x
+```
+
+Classification:
+
+> **`HUMAN_NMDA_RESHAPES_BUT_DOES_NOT_RESCUE_SOMA_OBSERVABILITY`**
+
+The AMPA-only and frozen-NMDA controls are algebraically identical under the
+locked rest matching and agree to **8.674e-19 mV**. The HUMAN implicit
+sensitivity agrees with a direct 10% hidden-leak finite difference to relative
+error **0.0002**.
+
+This closes the specific attempted bridge from addressed dendritic stimulation
+plus HUMAN NMDA to a high-fidelity central soma observer. It does **not** prove
+that neurons cannot communicate local state by other mechanisms.
+
+See [the full Gate 5 boundary](docs/GATE5_NMDA_BRIDGE.md) and
+[the experiment](experiments/gate5_nmda_observability.py).
+
 ## The adjoint: what V24 uses, and what it does not claim
 
 For a static linear measurement stack `y = Hx`, the squared-error gradient is simply
@@ -249,27 +292,43 @@ python experiments/gate2_robustness.py
 
 Every experiment writes a machine-readable JSON receipt under `results/` and exits nonzero if its own locked gate fails. The robustness audit exits successfully when the mechanism-level replication succeeds while preserving the failed original margin as its scientific classification.
 
-## The next gate
+## The next gate - back to PerceptionLab
 
-Gate 4 changes the question.
+The neuron bridge has now done its job.
 
-Address selection already opens the passive soma-observability matrix to full
-rank. What remains weak is the amplitude of several directions at the soma.
+Gate 4 showed that address can open algebraic observability on a real
+morphology. Gate 5 showed that the tested HUMAN NMDA feedback does not turn
+that severely compressed soma channel into a detailed branch-state observer.
 
-Operaattori has already established a local HUMAN AMPA/NMDA feedback law on
-cell 1125. The next experiment should therefore ask whether that nonlinear
-closure **amplifies, rotates, or selectively rescues the weak Gate-4 singular
-directions**.
+So V24 returns to the synthetic question that was stronger all along:
 
-The required attackers are AMPA-only, frozen magnesium block, and the same
-passive current probes. Keep addresses and hidden leak perturbations fixed.
-If HUMAN NMDA does not improve the weak directions, stop trying to turn a
-soma-only scalar into a complete dendritic monitor.
+```text
+remember
+   |
+predict
+   |
+measure surprise
+   |
+pay only when surprise/ambiguity justifies another look
+   |
+move address / lens scale
+   |
+write the correction back into persistent spatial state
+```
+
+The next experiment should make **history change future sensing**. A persistent
+local write must reduce the need to re-measure the same recurring surprise;
+prediction errors should choose when and where to spend a bounded probe budget.
+The attacker is the same active reader with its write memory erased.
+
+This is Geometric Neuron in the old PerceptionLab sense again: addressable
+spatial read/write and an active sampling policy, not a claim that a biological
+neuron literally implements the software.
 
 See [`METHOD.md`](METHOD.md), [`RESULTS.md`](RESULTS.md), and [`MORGUE.md`](MORGUE.md).
 
 ---
 
-**Current boundary:** V24 has earned an addressable scalar observation family, controlled READ+WRITE interventions, and on a pinned real human morphology an addressed stimulation family that opens a 12-parameter passive soma-observability Jacobian to full rank. It has **not** earned reliable full identity through a 1-uV soma-noise channel, a released-model nonlinear result, autonomous biological self-probing, a physical adjoint, or a complete neuron mechanism.
+**Current boundary:** V24 has earned addressable scalar read/write, active hidden-law identification, persistent operator writes, and a real-morphology observability bridge. The tested HUMAN NMDA law **did not** rescue the weak soma-observability directions. The project now returns to synthetic PerceptionLab-style active sensing rather than adding another biological rescue mechanism.
 
 *Do not hype. Do not lie. Just show.*
