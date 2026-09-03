@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Geometric Neuron V24 — PerceptionLab Memory</title>
+<style>
+:root{color-scheme:dark;--bg:#071019;--p:#0c1a27;--l:#294157;--ink:#edf3fa;--m:#92a5b8;--cyan:#59e1c2;--amber:#ffbd59;--red:#ff7b83}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0,#12334a 0,transparent 35rem),var(--bg);color:var(--ink);font:15px/1.45 system-ui,sans-serif}
+main{width:min(1180px,calc(100% - 24px));margin:auto;padding:24px 0 60px}a{color:#9dd4ff}h1{margin:.15rem 0;font-size:clamp(1.7rem,4vw,3rem)}.ey{font:800 .7rem ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#8196aa}.muted{color:var(--m)}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.controls button,.controls select,.controls label{border:1px solid var(--l);border-radius:9px;background:#0a1722;color:var(--ink);padding:9px 11px}.controls button{cursor:pointer}.controls label{display:flex;gap:7px;align-items:center}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.panel{background:linear-gradient(180deg,#102132,#091722);border:1px solid var(--l);border-radius:14px;padding:13px}.panel h2{font-size:1rem;margin:0 0 8px}.canvasWrap{position:relative}canvas{width:100%;aspect-ratio:1/1;image-rendering:pixelated;border:1px solid var(--l);border-radius:9px;background:#02070b}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}.stat{padding:10px;border:1px solid var(--l);border-radius:10px;background:#08141e}.stat span{display:block;color:#76899c;font:700 .65rem ui-monospace,monospace;text-transform:uppercase}.stat strong{display:block;margin-top:4px;font:800 1.1rem ui-monospace,monospace}.log{height:180px;overflow:auto;white-space:pre-wrap;background:#06111a;border:1px solid var(--l);border-radius:10px;padding:10px;font:.78rem/1.45 ui-monospace,monospace;color:#bcd0df}.result{margin-top:12px;padding:14px;border-left:3px solid var(--cyan);background:#08141e}.fail{color:var(--red)}.pass{color:var(--cyan)}
+@media(max-width:800px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body><main>
+<div class="ey">Geometric Neuron V24 / Gate 6</div>
+<h1>Remember → predict → be surprised → look → write → stop looking.</h1>
+<p class="muted">A live version of the PerceptionLab return. A moving field occasionally grows one of eight hidden 4×4 patches. HOME is one scalar. Paid lenses can move and change scale. Durable WRITE determines whether the same surprise has to be solved again tomorrow.</p>
+
+<div class="controls">
+<button id="play">▶ Play</button>
+<button id="step">Step</button>
+<button id="reset">Reset</button>
+<label><input id="write" type="checkbox" checked> persistent WRITE</label>
+<select id="policy"><option value="info">expected information</option><option value="variance">raw predictive variance</option></select>
+</div>
+
+<div class="stats">
+<div class="stat"><span>time</span><strong id="t">0</strong></div>
+<div class="stat"><span>HOME surprise</span><strong id="surprise">0</strong></div>
+<div class="stat"><span>paid ATP</span><strong id="atp">0</strong></div>
+<div class="stat"><span>last lens</span><strong id="lens">—</strong></div>
+<div class="stat"><span>memory MSE</span><strong id="mse">0</strong></div>
+</div>
+
+<div class="grid">
+<section class="panel"><h2>WORLD</h2><div class="canvasWrap"><canvas id="world" width="320" height="320"></canvas></div></section>
+<section class="panel"><h2>PREDICTED / WRITTEN MEMORY</h2><div class="canvasWrap"><canvas id="memory" width="320" height="320"></canvas></div></section>
+</div>
+
+<div class="grid" style="margin-top:12px">
+<section class="panel"><div class="ey">event log</div><div id="log" class="log"></div></section>
+<section class="panel">
+<div class="ey">audited result</div>
+<div class="result"><strong class="pass">Persistent write:</strong> 42 paid probes versus 280 with the same active reader but no durable write. Pre-prediction MSE ratio: 0.234. Repeated paid looks: 0 versus 56.</div>
+<div class="result"><strong class="fail">Original scale claim failed:</strong> raw variance used 4.375 onset probes — exactly fine-only.</div>
+<div class="result"><strong class="pass">Post-result information policy:</strong> 3.000 probes, with <span style="font-family:ui-monospace,monospace">16 → 8 → 4</span> on 160/160 searches.</div>
+</section>
+</div>
+
+<p class="muted" style="margin-top:14px"><a href="./">main instrument</a> · <a href="./gate5.html">neuron bridge</a> · <a href="https://github.com/anttiluode/GeometricNeuronV24">source and receipts</a></p>
+</main>
+<script>
+const N=32, P=4, AMP=.8, TH=.004;
+const worldC=document.getElementById('world'), memC=document.getElementById('memory');
+const ctxW=worldC.getContext('2d'), ctxM=memC.getContext('2d');
+let state, timer=null;
+
+function idx(y,x){return y*N+x}
+function base(){
+  const a=new Float64Array(N*N);
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){
+    a[idx(y,x)]=.28*Math.sin(2*Math.PI*x/N)+.20*Math.cos(4*Math.PI*y/N)
+      +.35*Math.exp(-((x-9)**2+(y-9)**2)/(2*25))
+      -.22*Math.exp(-((x-23)**2+(y-21)**2)/(2*16));
+  }
+  return a;
+}
+function template(k){
+  const a=new Float64Array(N*N), y0=12,x0=4*k;
+  for(let y=y0;y<y0+P;y++)for(let x=x0;x<x0+P;x++)a[idx(y,x)]=AMP;
+  return a;
+}
+const B=base(), T=Array.from({length:8},(_,k)=>template(k));
+function roll(a,s){
+  const out=new Float64Array(a.length);
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++)out[idx(y,(x+s+N)%N)]=a[idx(y,x)];
+  return out;
+}
+function add(a,b,sign=1){const o=new Float64Array(a.length);for(let i=0;i<a.length;i++)o[i]=a[i]+sign*b[i];return o}
+function mean(a){let s=0;for(const v of a)s+=v;return s/a.length}
+function mse(a,b){let s=0;for(let i=0;i<a.length;i++){const d=a[i]-b[i];s+=d*d}return s/a.length}
+function trueId(t){
+  const cycle=Math.floor(t/12), phase=t%12;
+  return phase<4?null:(cycle%8);
+}
+function makeWorld(t){
+  const id=trueId(t); let m=B;
+  if(id!==null)m=add(B,T[id]);
+  return roll(m,t);
+}
+function mask(scale,x0){
+  const a=new Float64Array(N*N), y0=scale===16?8:12;
+  for(let y=y0;y<y0+scale;y++)for(let x=x0;x<x0+scale;x++)a[idx(y,x)]=1/(scale*scale);
+  return a;
+}
+const lenses=[];
+for(const x of [0,16])lenses.push({scale:16,x,mask:mask(16,x)});
+for(const x of [0,8,16,24])lenses.push({scale:8,x,mask:mask(8,x)});
+for(let x=0;x<32;x+=4)lenses.push({scale:4,x,mask:mask(4,x)});
+function read(a,l,t){const m=roll(l.mask,t);let s=0;for(let i=0;i<a.length;i++)s+=a[i]*m[i];return s}
+function entropy(p){let h=0;for(const q of p)if(q>0)h-=q*Math.log2(q);return h}
+function scoreInfo(p,mu){
+  // High-SNR approximation used only for live visualization: group hypotheses
+  // by predicted scalar value and ask how much entropy that partition removes.
+  const groups=new Map();
+  for(let i=0;i<mu.length;i++){const key=mu[i].toFixed(6);if(!groups.has(key))groups.set(key,[]);groups.get(key).push(i)}
+  let rem=0;
+  for(const ids of groups.values()){
+    let mass=0;for(const i of ids)mass+=p[i];
+    if(mass<=0)continue;
+    let hg=0;for(const i of ids){const q=p[i]/mass;if(q>0)hg-=q*Math.log2(q)}
+    rem+=mass*hg;
+  }
+  return entropy(p)-rem;
+}
+function search(world,mem,t,mode){
+  let p=Array(8).fill(1/8), used=new Set(), trace=[];
+  for(let step=0;step<8;step++){
+    let best=-1,bestS=-1,bestMu=null;
+    for(let li=0;li<lenses.length;li++){
+      if(used.has(li))continue;
+      const l=lenses[li], mu=T.map(tp=>read(roll(tp,t),l,t));
+      let sc;
+      if(mode==='info')sc=scoreInfo(p,mu);
+      else {let m=0;for(let i=0;i<8;i++)m+=p[i]*mu[i];sc=0;for(let i=0;i<8;i++)sc+=p[i]*(mu[i]-m)**2}
+      if(sc>bestS){bestS=sc;best=li;bestMu=mu}
+    }
+    const l=lenses[best], z=read(world,l,t)-read(mem,l,t);
+    // noiseless live posterior; CI experiment contains Gaussian noise.
+    let keep=[];for(let i=0;i<8;i++)if(Math.abs(bestMu[i]-z)<.01)keep.push(i);
+    if(keep.length===0){keep=[bestMu.map((v,i)=>[Math.abs(v-z),i]).sort((a,b)=>a[0]-b[0])[0][1]]}
+    p=p.map((_,i)=>keep.includes(i)?1/keep.length:0);
+    used.add(best); trace.push(l); state.atp++;
+    state.lastLens=l;
+    logLine(`t=${t} paid lens ${l.scale}×${l.scale} @ x=${l.x}  hypotheses=${keep.length}`);
+    if(keep.length===1)return {id:keep[0],trace};
+  }
+  return {id:p.indexOf(Math.max(...p)),trace};
+}
+function inferMemId(mem,t){
+  const rb=add(mem,roll(B,t),-1);let best=0,bs=-1e99;
+  for(let k=0;k<8;k++){const tp=roll(T[k],t);let s=0;for(let i=0;i<rb.length;i++)s+=rb[i]*tp[i];if(s>bs){bs=s;best=k}}
+  return best;
+}
+function logLine(s){const el=document.getElementById('log');el.textContent+=s+"\n";el.scrollTop=el.scrollHeight}
+function reset(){
+  state={t:0,mem:B.slice(),atp:0,lastLens:null};
+  document.getElementById('log').textContent='';
+  render();
+}
+function step(){
+  const t=state.t;
+  if(t>0)state.mem=roll(state.mem,1);
+  const w=makeWorld(t), id=trueId(t), diff=mean(w)-mean(state.mem);
+  if(Math.abs(diff)>=TH){
+    logLine(`t=${t} HOME surprise ${diff.toFixed(4)} → search`);
+    if(diff>0){
+      const r=search(w,state.mem,t,document.getElementById('policy').value);
+      if(document.getElementById('write').checked){
+        state.mem=add(state.mem,roll(T[r.id],t));
+        logLine(`t=${t} WRITE prototype ${r.id}; future prediction changed`);
+      } else logLine(`t=${t} READ ONLY; correction discarded`);
+    }else if(document.getElementById('write').checked){
+      const k=inferMemId(state.mem,t), l=lenses.find(q=>q.scale===4&&q.x===4*k);
+      state.atp++;state.lastLens=l;
+      state.mem=add(state.mem,roll(T[k],t),-1);
+      logLine(`t=${t} verify disappearance with 4×4; ERASE prototype ${k}`);
+    }
+  }
+  state.world=w; state.surprise=diff; state.trueId=id;
+  render();
+  state.t++;
+  if(state.t>=96){if(timer){clearInterval(timer);timer=null;document.getElementById('play').textContent='▶ Play'}state.t=0}
+}
+function color(v){
+  const z=Math.max(-1,Math.min(1,v)); const h=z>=0?180:350, sat=55, light=12+Math.abs(z)*55;
+  return `hsl(${h} ${sat}% ${light}%)`;
+}
+function draw(canvas,ctx,a,t,lens){
+  const s=canvas.width/N;ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){ctx.fillStyle=color(a[idx(y,x)]);ctx.fillRect(x*s,y*s,s+.2,s+.2)}
+  if(lens){
+    const x0=(lens.x+t)%N, y0=lens.scale===16?8:12;
+    ctx.strokeStyle='#ffbd59';ctx.lineWidth=3;
+    if(x0+lens.scale<=N)ctx.strokeRect(x0*s,y0*s,lens.scale*s,lens.scale*s);
+  }
+}
+function render(){
+  const t=state.t, w=state.world||makeWorld(t), mem=state.mem;
+  draw(worldC,ctxW,w,t,state.lastLens);draw(memC,ctxM,mem,t,null);
+  document.getElementById('t').textContent=t;
+  document.getElementById('surprise').textContent=(state.surprise||0).toFixed(4);
+  document.getElementById('atp').textContent=state.atp;
+  document.getElementById('lens').textContent=state.lastLens?`${state.lastLens.scale}×${state.lastLens.scale}`:'—';
+  document.getElementById('mse').textContent=mse(mem,w).toFixed(5);
+}
+document.getElementById('step').onclick=step;
+document.getElementById('reset').onclick=reset;
+document.getElementById('play').onclick=()=>{
+  if(timer){clearInterval(timer);timer=null;document.getElementById('play').textContent='▶ Play'}
+  else{timer=setInterval(step,240);document.getElementById('play').textContent='❚❚ Pause'}
+};
+reset();
+</script>
+</body></html>
