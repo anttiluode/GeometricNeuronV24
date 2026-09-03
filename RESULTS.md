@@ -102,3 +102,60 @@ The two writes answer different questions. Gate 3A perturbs state so the unchang
 | minimum noise-aware-minus-random margin | 0.516 |
 
 These are finite controlled hidden-law families. The result is an observability mechanism, not unknown-PDE discovery or a neuronal-learning result.
+
+
+## Gate 4 - `RANK_OPENS_BUT_1UV_SOMA_IDENTITY_GATE_FAILS`
+
+Pinned human L2/3 cell 1125:
+
+| quantity | result |
+|---|---:|
+| morphology nodes | 12,632 |
+| eligible dendritic sections | 182 |
+| hidden local leak parameters | 12 |
+| candidate addressed probes | 144 |
+| probe budget | 12 |
+| analytic vs exact 10% sensitivity relative error | 0.0002 |
+
+At 1 uV RMS soma noise:
+
+| policy | numerical rank | noise-visible rank | exact hidden-section identity |
+|---|---:|---:|---:|
+| fixed one address, varying scale | 2 | 1 | 0.372 |
+| active point-only | 12 | 7 | 0.761 |
+| active multiscale | 12 | 7 | 0.779 |
+| random multiscale | 9 median | 4 median | 0.539 mean (32 post-result subsets) |
+
+Active multiscale smallest singular value was `6.3980e-05 mV`; the random
+multiscale median was effectively rank-deficient. The active 12-probe sequence
+used 3 point probes, 2 radius-35-um probes, and 7 radius-110-um probes.
+
+The original locked exact-identification requirement was >=0.90 at 1 uV.
+It failed and is not revised.
+
+## Gate 4 post-result audit - `ADDRESS_OPENS_FULL_RANK_BUT_SOMA_NOISE_LIMITS_IDENTITY`
+
+Across ten new observation-noise seeds at 1 uV RMS:
+
+| metric | result |
+|---|---:|
+| active accuracy mean | 0.778 |
+| active accuracy min / max | 0.772 / 0.783 |
+| original >=0.90 passes | 0 / 10 |
+| random-subset accuracy mean | 0.539 |
+
+Post-result active noise sweep:
+
+| soma noise RMS | mean exact identity |
+|---:|---:|
+| 0.10 uV | 1.000 |
+| 0.25 uV | 0.977 |
+| 0.50 uV | 0.905 |
+| 1.00 uV | 0.777 |
+| 2.00 uV | 0.543 |
+| 5.00 uV | 0.258 |
+
+A flattened-radius attacker also retained full rank; its smallest active singular
+value was `1.3080e-04 mV`, larger than with the biological radius profile.
+So this passive assay does not support radius heterogeneity as the source of
+the observability gain.
