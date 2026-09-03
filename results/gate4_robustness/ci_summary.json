@@ -1,0 +1,36 @@
+{
+  "audit": "gate4_robustness_and_noise_boundary_ci_summary",
+  "source_run_id": 33721598157,
+  "classification": "ADDRESS_OPENS_FULL_RANK_BUT_SOMA_NOISE_LIMITS_IDENTITY",
+  "algebraic_mechanism_replicated": true,
+  "original_1uv_identity_gate_replicated": false,
+  "original_1uv_pass_count": 0,
+  "original_1uv_total": 10,
+  "active_rank": 12,
+  "random_median_rank": 9.0,
+  "active_smallest_singular_mV": 6.3980e-05,
+  "random_p90_smallest_singular_mV": 3.2650e-19,
+  "accuracy_1uv": {
+    "active_mean": 0.778,
+    "active_min": 0.772,
+    "active_max": 0.783,
+    "random_subset_mean": 0.539
+  },
+  "noise_sweep_active_mean": {
+    "0.0001": 1.000,
+    "0.00025": 0.977,
+    "0.0005": 0.905,
+    "0.001": 0.777,
+    "0.002": 0.543,
+    "0.005": 0.258
+  },
+  "noise_sweep_active_min": {
+    "0.0001": 1.000,
+    "0.00025": 0.972,
+    "0.0005": 0.897,
+    "0.001": 0.765,
+    "0.002": 0.528,
+    "0.005": 0.246
+  },
+  "note": "The noise sweep was added after the locked 1-uV identity criterion failed; it does not replace that gate."
+}
