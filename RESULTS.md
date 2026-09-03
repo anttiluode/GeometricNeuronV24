@@ -159,3 +159,35 @@ A flattened-radius attacker also retained full rank; its smallest active singula
 value was `1.3080e-04 mV`, larger than with the biological radius profile.
 So this passive assay does not support radius heterogeneity as the source of
 the observability gain.
+
+
+## Gate 5 - `HUMAN_NMDA_RESHAPES_BUT_DOES_NOT_RESCUE_SOMA_OBSERVABILITY`
+
+Same passive-selected 12 probe addresses in every condition:
+
+| condition | numerical rank | visible @ 1 uV | smallest singular (mV) | exact identity |
+|---|---:|---:|---:|---:|
+| PASSIVE_CURRENT | 12 | 7 | 6.3980e-05 | 0.776 |
+| AMPA_ONLY | 12 | 7 | 5.2641e-05 | 0.713 |
+| FROZEN_NMDA | 12 | 7 | 5.2641e-05 | 0.713 |
+| HUMAN_NMDA | 12 | 7 | 5.4218e-05 | 0.724 |
+
+HUMAN versus frozen:
+
+| quantity | result |
+|---|---:|
+| visible-rank gain | +0 |
+| identity gain | +0.011 |
+| median passive-weak gain | 1.030x |
+| median passive-strong gain | 1.036x |
+| weak/strong selectivity | 0.994x |
+
+Controls:
+
+- AMPA_ONLY and frozen NMDA discrepancy: `8.674e-19 mV`;
+- HUMAN analytic implicit derivative vs direct 10% hidden-leak perturbation:
+  relative error `0.0002`.
+
+The locked rescue requirements were not met. HUMAN magnesium feedback reshapes
+the sensitivity matrix slightly but does not selectively lift the five weak
+Gate-4 directions or add a noise-visible dimension.
