@@ -1,4 +1,4 @@
-name: Gate 7 finite history
+name: Gate 8 streaming reference
 
 on:
   push:
@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  gate7:
+  gate8:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,4 +18,4 @@ jobs:
           python-version: '3.12'
       - run: python -m pip install --upgrade pip
       - run: pip install numpy
-      - run: python experiments/gate7_forced_history.py
+      - run: python experiments/gate8_streaming_subspace.py
