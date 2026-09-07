@@ -1,0 +1,23 @@
+{
+  "schema": "geometric-neuron/gate8-streaming-reference-subspace-v1",
+  "question": "Can the finite addressed reference be stored as an online low-rank subspace state rather than an explicit history list?",
+  "n_trials_per_condition": 80,
+  "baseline_local_same_field": {"paid_probes_mean": 9.75, "repeated_paid_steps_mean": 4.575, "negative_home_triggers_mean": 3.4875, "final_mse_mean": 0.004734405158803098},
+  "baseline_full_history_replay": {"paid_probes_mean": 5.625, "repeated_paid_steps_mean": 0.875, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.004054622974919412},
+  "correct_address": [
+    {"rank_cap": 1, "paid_probes_mean": 13.5, "repeated_paid_steps_mean": 3.5, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.009688265962131135, "final_reference_rank_mean": 1.0},
+    {"rank_cap": 2, "paid_probes_mean": 8.25, "repeated_paid_steps_mean": 1.75, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.008543327087042096, "final_reference_rank_mean": 2.0},
+    {"rank_cap": 3, "paid_probes_mean": 5.625, "repeated_paid_steps_mean": 0.875, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.0040548565977092015, "final_reference_rank_mean": 3.0},
+    {"rank_cap": 4, "paid_probes_mean": 5.625, "repeated_paid_steps_mean": 0.875, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.00405486935962999, "final_reference_rank_mean": 3.0},
+    {"rank_cap": 8, "paid_probes_mean": 5.6375, "repeated_paid_steps_mean": 0.8875, "negative_home_triggers_mean": 0.0125, "final_mse_mean": 0.004054891738001612, "final_reference_rank_mean": 3.0}
+  ],
+  "scrambled_address": [
+    {"rank_cap": 1, "paid_probes_mean": 13.5, "repeated_paid_steps_mean": 3.5, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.010314363453415121},
+    {"rank_cap": 2, "paid_probes_mean": 15.25, "repeated_paid_steps_mean": 5.25, "negative_home_triggers_mean": 1.75, "final_mse_mean": 0.012177483349165644},
+    {"rank_cap": 3, "paid_probes_mean": 15.25, "repeated_paid_steps_mean": 5.25, "negative_home_triggers_mean": 1.75, "final_mse_mean": 0.020078939106834826},
+    {"rank_cap": 4, "paid_probes_mean": 15.25, "repeated_paid_steps_mean": 5.25, "negative_home_triggers_mean": 1.75, "final_mse_mean": 0.02009766111224653},
+    {"rank_cap": 8, "paid_probes_mean": 15.25, "repeated_paid_steps_mean": 5.25, "negative_home_triggers_mean": 1.75, "final_mse_mean": 0.020119926042403084}
+  ],
+  "classification": "RANK_THREE_CORRECTLY_ADDRESSED_STREAMING_SUBSPACE_MATCHES_FULL_REPLAY_WITHOUT_A_CHRONOLOGICAL_LEDGER; WRONG_ADDRESS_FAILS",
+  "claim_boundary": "The streaming orthogonalization is exact linear algebra, not a biological mechanism. The result establishes sufficiency of a low-rank intervention subspace state in this toy, not dendritic Gram-Schmidt, Takens implementation, or AIS-grating processing."
+}
