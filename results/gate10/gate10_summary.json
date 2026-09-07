@@ -1,0 +1,32 @@
+{
+  "schema": "geometric-neuron/gate10-controlled-delay-observer-v1",
+  "question": "Can finite history of (known self-action, scalar return) reconstruct a moving hidden state well enough to predict self-generated sensory return and expose unreported external change as innovation?",
+  "dynamics": {
+    "hidden_state": "theta plus unknown per-episode angular drift omega",
+    "action_effect": "known phase kick plus action-specific scalar sensor direction",
+    "actions": 4,
+    "observation_noise": 0.015
+  },
+  "clean_prediction_by_history": [
+    {"window": 1, "mse": 0.5148485697788869, "mae": 0.38180702922236553, "omega_mae": 0.06508839982803186},
+    {"window": 2, "mse": 0.024162980218118517, "mae": 0.05051523223028635, "omega_mae": 0.03158778382371258},
+    {"window": 3, "mse": 0.005720740224419551, "mae": 0.03135784079204805, "omega_mae": 0.018228771094862838},
+    {"window": 4, "mse": 0.002112636435378635, "mae": 0.024188435655368254, "omega_mae": 0.011188708720755084},
+    {"window": 6, "mse": 0.0006839294791084226, "mae": 0.019415885620923872, "omega_mae": 0.005771553131284243},
+    {"window": 8, "mse": 0.0005265409421300717, "mae": 0.017621751701118748, "omega_mae": 0.0037096805099980064}
+  ],
+  "best_window": 8,
+  "attackers_at_best_window": {
+    "wrong_history_address": {"mse": 1.0001680058629627, "mae": 0.900296587797368, "omega_mae": 0.02991791964807267},
+    "no_next_efference_copy": {"mse": 0.5044616657206666, "mae": 0.6399210931380266, "omega_mae": 0.0037096805099980064}
+  },
+  "hidden_phase_shock": {
+    "n_shocks": 282,
+    "n_clean": 5150,
+    "auc_raw_abs_change": 0.5195724023961992,
+    "auc_abs_innovation": 0.934015699235695,
+    "auc_abs_innovation_wrong_history_address": 0.4448047923982648
+  },
+  "classification": "CONTROLLED_DELAY_HISTORY_RECONSTRUCTS_MOVING_HIDDEN_STATE; CORRECT_ACTION_HISTORY_AND_NEXT_ACTION_COPY_ARE_CAUSALLY_REQUIRED; PREDICTION_RESIDUAL_EXPOSES_HIDDEN_SHOCKS",
+  "claim_boundary": "This is an explicit grid-based forced/input-output delay reconstruction on a synthetic controlled oscillator. It supports a computational composition of delay history and efference information; it is not a proof of Takens theorem in neurons, a cerebellar model, a dendritic cable implementation, or an AIS-grating mechanism."
+}
