@@ -1,0 +1,19 @@
+{
+  "schema": "geometric-neuron/gate9r-random-scan-history-v1",
+  "question": "When adaptive-policy address leakage is removed, does temporal history of correctly addressed self-generated pulses become necessary?",
+  "scan": "random permutation of all eight fine 4x4 lenses; order independent of hidden identity",
+  "n_trials": 80,
+  "full_history_replay": {
+    "identity_accuracy": 1.0,
+    "mse_mean": 4.92164123046237e-7
+  },
+  "conditions": [
+    {"kind": "tap1", "address_mode": "correct", "identity_accuracy": 0.2875, "mse_mean": 0.007678130722816844},
+    {"kind": "tap2", "address_mode": "correct", "identity_accuracy": 0.45, "mse_mean": 0.006070150292301584},
+    {"kind": "tap3", "address_mode": "correct", "identity_accuracy": 0.5625, "mse_mean": 0.004832053387861797},
+    {"kind": "leaky4", "address_mode": "correct", "identity_accuracy": 1.0, "mse_mean": 9.285331997122057e-7},
+    {"kind": "leaky4", "address_mode": "scalar_only", "identity_accuracy": 0.125, "mse_mean": 0.008770286197807509}
+  ],
+  "classification": "AFTER_REMOVING_POLICY_ADDRESS_LEAKAGE_SINGLE_TAP_FAILS_HISTORY_HELPS_AND_MULTI_TIMESCALE_ADDRESSED_TRACE_MATCHES_FULL_REPLAY; SCALAR_ONLY_IS_CHANCE",
+  "claim_boundary": "This gate removes one policy-state shortcut. It still uses a trained linear decoder and a stationary synthetic target. The result establishes usefulness of addressed temporal state in this toy, not Takens theorem, a dendritic implementation, or AIS-grating processing."
+}
