@@ -1,0 +1,21 @@
+name: Gate 7 finite history
+
+on:
+  push:
+    branches: [gate7-forced-history]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gate7:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --upgrade pip
+      - run: pip install numpy
+      - run: python experiments/gate7_forced_history.py
