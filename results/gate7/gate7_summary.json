@@ -1,0 +1,46 @@
+{
+  "schema": "geometric-neuron/gate7-finite-addressed-history-v1",
+  "question": "At instantaneous same-field WRITE, how much finite (address,pulse) history is needed to approach the full HISTORY_REPLAY attacker?",
+  "n_trials_per_condition": 80,
+  "baseline_local_same_field": {
+    "paid_probes_mean": 9.75,
+    "repeated_paid_steps_mean": 4.575,
+    "localization_accuracy": 1.0,
+    "negative_home_triggers_mean": 3.4875,
+    "final_mse_mean": 0.004734405158803098
+  },
+  "baseline_full_history_replay": {
+    "paid_probes_mean": 5.625,
+    "repeated_paid_steps_mean": 0.875,
+    "localization_accuracy": 1.0,
+    "negative_home_triggers_mean": 0.0,
+    "final_mse_mean": 0.004054622974919412
+  },
+  "finite_correct_address": [
+    {"window": 1, "paid_probes_mean": 13.5, "repeated_paid_steps_mean": 3.5, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.005000070753670427},
+    {"window": 2, "paid_probes_mean": 8.25, "repeated_paid_steps_mean": 1.75, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.004167010239979998},
+    {"window": 3, "paid_probes_mean": 5.625, "repeated_paid_steps_mean": 0.875, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.004054116929962123},
+    {"window": 4, "paid_probes_mean": 5.625, "repeated_paid_steps_mean": 0.875, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.004054482438245801},
+    {"window": 6, "paid_probes_mean": 5.6625, "repeated_paid_steps_mean": 0.8875, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.004054422778332177},
+    {"window": 8, "paid_probes_mean": 5.625, "repeated_paid_steps_mean": 0.875, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.004054366217663396},
+    {"window": 12, "paid_probes_mean": 5.625, "repeated_paid_steps_mean": 0.875, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.004054106600598065},
+    {"window": 16, "paid_probes_mean": 5.625, "repeated_paid_steps_mean": 0.875, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.00405457279821807},
+    {"window": 32, "paid_probes_mean": 5.6625, "repeated_paid_steps_mean": 0.8875, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.004054298658252922},
+    {"window": 64, "paid_probes_mean": 5.625, "repeated_paid_steps_mean": 0.875, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.004054644676263496}
+  ],
+  "finite_scrambled_address": [
+    {"window": 1, "paid_probes_mean": 13.5, "repeated_paid_steps_mean": 3.5, "negative_home_triggers_mean": 0.0, "final_mse_mean": 0.014993144299740274},
+    {"window": 2, "paid_probes_mean": 15.25, "repeated_paid_steps_mean": 5.25, "negative_home_triggers_mean": 1.75, "final_mse_mean": 0.018722439896045186},
+    {"window": 3, "paid_probes_mean": 15.25, "repeated_paid_steps_mean": 5.25, "negative_home_triggers_mean": 1.75, "final_mse_mean": 0.02011111991257488},
+    {"window": 4, "paid_probes_mean": 15.25, "repeated_paid_steps_mean": 5.25, "negative_home_triggers_mean": 1.75, "final_mse_mean": 0.020066704798951864},
+    {"window": 6, "paid_probes_mean": 15.25, "repeated_paid_steps_mean": 5.25, "negative_home_triggers_mean": 1.75, "final_mse_mean": 0.020089856283901558},
+    {"window": 8, "paid_probes_mean": 15.25, "repeated_paid_steps_mean": 5.25, "negative_home_triggers_mean": 1.75, "final_mse_mean": 0.020077455131076706},
+    {"window": 12, "paid_probes_mean": 15.25, "repeated_paid_steps_mean": 5.25, "negative_home_triggers_mean": 1.75, "final_mse_mean": 0.020092447296857382},
+    {"window": 16, "paid_probes_mean": 15.25, "repeated_paid_steps_mean": 5.25, "negative_home_triggers_mean": 1.75, "final_mse_mean": 0.020077505394222008},
+    {"window": 32, "paid_probes_mean": 15.25, "repeated_paid_steps_mean": 5.25, "negative_home_triggers_mean": 1.75, "final_mse_mean": 0.020063106842124756},
+    {"window": 64, "paid_probes_mean": 15.25, "repeated_paid_steps_mean": 5.25, "negative_home_triggers_mean": 1.75, "final_mse_mean": 0.020090101757069895}
+  ],
+  "best_finite_window": 3,
+  "classification": "THREE_CORRECTLY_ADDRESSED_PULSES_MATCH_FULL_REPLAY_IN_THIS_THREE_PROBE_SEARCH; SCRAMBLED_ADDRESSES_FAIL EVEN_WITH_LONG_HISTORY",
+  "claim_boundary": "This is finite addressed linear measurement replay, not a proof of Takens embedding, not a dendritic implementation, and not evidence for AIS periodicity as a delay line."
+}
